@@ -6,7 +6,7 @@ import '../../data/model/record.dart';
 import '../controllers/firestore_controller.dart';
 
 class FireStorePage extends StatefulWidget {
-  const FireStorePage({Key? key}) : super(key: key);
+  const FireStorePage({super.key});
 
   @override
   State<FireStorePage> createState() => _FireStorePageState();

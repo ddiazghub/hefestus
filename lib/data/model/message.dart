@@ -1,23 +1,25 @@
-//import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
+import 'package:hefestus/data/model/annotation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hefestus/helpers.dart';
 
-import 'package:firebase_database/firebase_database.dart';
+part 'message.g.dart';
 
+@FirestoreSerializable
 class Message {
-  String? key;
-  String text;
-  String user;
+  Message(this.text, this.user, {this.key = '', DateTime? createdAt})
+    : createdAt = createdAt ?? DateTime.now();
 
-  Message(this.key, this.text, this.user);
+  @DateTimeField
+  final DateTime createdAt;
+  final String key;
+  final String text;
+  final String user;
 
-  Message.fromJson(DataSnapshot snapshot, Map<dynamic, dynamic> json)
-      : key = snapshot.key ?? "0",
-        user = json['uid'] ?? "uid",
-        text = json['text'] ?? "text";
-
-  toJson() {
-    return {
-      "text": text,
-      "user": user,
-    };
-  }
+  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
+  
+  Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
+
+@Collection<Message>('messages')
+final MessageRef = MessageCollectionReference();

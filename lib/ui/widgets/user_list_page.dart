@@ -1,11 +1,11 @@
-import 'package:f_firebase_202210/ui/controllers/user_controller.dart';
+import 'package:hefestus/ui/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/model/app_user.dart';
+import '../../data/model/user.dart';
 
 class UserListPage extends StatefulWidget {
-  const UserListPage({Key? key}) : super(key: key);
+  const UserListPage({super.key});
 
   @override
   State<UserListPage> createState() => _UserListPageState();

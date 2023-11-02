@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Record {
-  String name = "";
+  String name = '';
   int votes = 0;
   // final DocumentReference reference;
 
@@ -16,5 +16,5 @@ class Record {
   //           reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$name:$votes>";
+  String toString() => 'Record<$name:$votes>';
 }

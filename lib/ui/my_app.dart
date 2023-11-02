@@ -1,4 +1,4 @@
-import 'package:f_firebase_202210/ui/firebase_cental.dart';
+import 'package:hefestus/ui/firebase_central.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controllers/authentication_controller.dart';
@@ -7,13 +7,13 @@ import 'controllers/firestore_controller.dart';
 import 'controllers/user_controller.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     Get.put(FirestoreController());
     Get.put(ChatController());
-    Get.put(AuthenticationController());
+    Get.put(AuthController());
     Get.put(UserController());
 
     return GetMaterialApp(

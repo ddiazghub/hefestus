@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/data/model/user.dart';
 
 import '../../controllers/authentication_controller.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
-  final AuthenticationController authenticationController = Get.find();
+  LoginPage({super.key});
+
+  final AuthController auth = Get.find();
+
+  static final defaultUsers = [
+    AuthUser('a@a.com', '123456'),
+    AuthUser('b@b.com', '123456'),
+    AuthUser('c@c.com', '123456'),
+  ];
 
   void signIn() async {
-    await authenticationController.signup('a@a.com', '123456');
-    await authenticationController.signup('b@b.com', '123456');
-    await authenticationController.signup('c@c.com', '123456');
+    for (final user in defaultUsers) {
+      auth.signup(user);
+    }
   }
 
   void login(user) {
-    authenticationController.login(user, '123456');
+    auth.login(user, '123456');
   }
 
   @override
@@ -27,14 +35,14 @@ class LoginPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                     onPressed: () => login('a@a.com'),
-                    child: const Text("Login with a@a.com")),
+                    child: const Text('Login with a@a.com')),
                 ElevatedButton(
                     onPressed: () => login('b@b.com'),
-                    child: const Text("Login with b@b.com")),
+                    child: const Text('Login with b@b.com')),
                 ElevatedButton(
                     onPressed: () => login('c@c.com'),
-                    child: const Text("Login with c@c.com")),
-                ElevatedButton(onPressed: signIn, child: const Text("Sign in")),
+                    child: const Text('Login with c@c.com')),
+                ElevatedButton(onPressed: signIn, child: const Text('Sign in')),
               ]),
         ),
       ),

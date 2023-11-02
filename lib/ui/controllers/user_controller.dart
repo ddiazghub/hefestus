@@ -1,66 +1,40 @@
 import 'dart:async';
-import 'package:f_firebase_202210/ui/controllers/authentication_controller.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:hefestus/ui/controllers/authentication_controller.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import '../../data/model/app_user.dart';
+import '../../data/model/user.dart';
 
 class UserController extends GetxController {
-  var _users = <AppUser>[].obs;
+  final _users = <AppUser>[].obs;
 
-  final databaseRef = FirebaseDatabase.instance.ref();
-
-  late StreamSubscription<DatabaseEvent> newEntryStreamSubscription;
-
-  late StreamSubscription<DatabaseEvent> updateEntryStreamSubscription;
+  late StreamSubscription<AppUserQuerySnapshot> subscription;
 
   get users {
-    AuthenticationController authenticationController = Get.find();
-    return _users
-        .where((entry) => entry.uid != authenticationController.getUid())
-        .toList();
+    final auth = Get.find<AuthController>();
+
+    return _users.where((entry) => entry.uid != auth.uid).toList();
   }
 
-  get allUsers => _users;
+  get all => _users;
 
   void start() {
     _users.clear();
 
-    newEntryStreamSubscription =
-        databaseRef.child("userList").onChildAdded.listen(_onEntryAdded);
-
-    updateEntryStreamSubscription =
-        databaseRef.child("userList").onChildChanged.listen(_onEntryChanged);
-  }
-
-  void stop() {
-    newEntryStreamSubscription.cancel();
-    updateEntryStreamSubscription.cancel();
-  }
-
-  _onEntryAdded(DatabaseEvent event) {
-    final json = event.snapshot.value as Map<dynamic, dynamic>;
-    _users.add(AppUser.fromJson(event.snapshot, json));
-  }
-
-  _onEntryChanged(DatabaseEvent event) {
-    var oldEntry = _users.singleWhere((entry) {
-      return entry.key == event.snapshot.key;
+    subscription = UserRef.snapshots().listen((snapshot) {
+      _users.value = [for (final doc in snapshot.docs) doc.data];
     });
-
-    final json = event.snapshot.value as Map<dynamic, dynamic>;
-    _users[_users.indexOf(oldEntry)] = AppUser.fromJson(event.snapshot, json);
   }
 
-  Future<void> createUser(email, uid) async {
-    logInfo("Creating user in realTime for $email and $uid");
+  Future<void> stop() async => await subscription.cancel();
+
+  Future<void> create(AppUser user) async {
+    logInfo('Creating user in realTime');
+
     try {
-      await databaseRef
-          .child('userList')
-          .push()
-          .set({'email': email, 'uid': uid});
+      await UserRef.add(user);
     } catch (error) {
       logError(error);
+
       return Future.error(error);
     }
   }

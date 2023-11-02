@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
-import 'package:f_firebase_202210/firebase_options.dart';
+import 'package:hefestus/firebase_options.dart';
 
 import 'ui/my_app.dart';
 
