@@ -929,7 +929,7 @@ class AppUserQueryDocumentSnapshot
 AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
       json['email'] as String,
       key: json['key'] as String,
-      uid: json['uid'],
+      uid: json['uid'] as String,
     );
 
 const _$AppUserFieldMap = <String, String>{

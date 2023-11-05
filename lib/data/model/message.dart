@@ -7,17 +7,26 @@ part 'message.g.dart';
 
 @FirestoreSerializable
 class Message {
-  Message(this.text, this.user, {this.key = '', DateTime? createdAt})
-    : createdAt = createdAt ?? DateTime.now();
+  Message(
+    this.text,
+    this.sender, {
+    this.key = '',
+    DateTime? createdAt,
+    this.receiver,
+  }) : createdAt = createdAt ?? DateTime.now();
 
   @DateTimeField
   final DateTime createdAt;
+
+  @Id()
   final String key;
   final String text;
-  final String user;
+  final String sender;
+  final String? receiver;
 
-  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
-  
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
+
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 

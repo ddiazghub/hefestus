@@ -30,14 +30,14 @@ abstract class MessageCollectionReference
     DocumentSnapshot<Map<String, Object?>> snapshot,
     SnapshotOptions? options,
   ) {
-    return Message.fromJson(snapshot.data()!);
+    return Message.fromJson({'key': snapshot.id, ...?snapshot.data()});
   }
 
   static Map<String, Object?> toFirestore(
     Message value,
     SetOptions? options,
   ) {
-    return value.toJson();
+    return {...value.toJson()}..remove('key');
   }
 
   @override
@@ -129,12 +129,12 @@ abstract class MessageDocumentReference
   Future<void> update({
     DateTime createdAt,
     FieldValue createdAtFieldValue,
-    String key,
-    FieldValue keyFieldValue,
     String text,
     FieldValue textFieldValue,
-    String user,
-    FieldValue userFieldValue,
+    String sender,
+    FieldValue senderFieldValue,
+    String? receiver,
+    FieldValue receiverFieldValue,
   });
 
   /// Updates fields in the current document using the transaction API.
@@ -144,12 +144,12 @@ abstract class MessageDocumentReference
     Transaction transaction, {
     DateTime createdAt,
     FieldValue createdAtFieldValue,
-    String key,
-    FieldValue keyFieldValue,
     String text,
     FieldValue textFieldValue,
-    String user,
-    FieldValue userFieldValue,
+    String sender,
+    FieldValue senderFieldValue,
+    String? receiver,
+    FieldValue receiverFieldValue,
   });
 }
 
@@ -184,40 +184,43 @@ class _$MessageDocumentReference
   Future<void> update({
     Object? createdAt = _sentinel,
     FieldValue? createdAtFieldValue,
-    Object? key = _sentinel,
-    FieldValue? keyFieldValue,
     Object? text = _sentinel,
     FieldValue? textFieldValue,
-    Object? user = _sentinel,
-    FieldValue? userFieldValue,
+    Object? sender = _sentinel,
+    FieldValue? senderFieldValue,
+    Object? receiver = _sentinel,
+    FieldValue? receiverFieldValue,
   }) async {
     assert(
       createdAt == _sentinel || createdAtFieldValue == null,
       "Cannot specify both createdAt and createdAtFieldValue",
     );
     assert(
-      key == _sentinel || keyFieldValue == null,
-      "Cannot specify both key and keyFieldValue",
-    );
-    assert(
       text == _sentinel || textFieldValue == null,
       "Cannot specify both text and textFieldValue",
     );
     assert(
-      user == _sentinel || userFieldValue == null,
-      "Cannot specify both user and userFieldValue",
+      sender == _sentinel || senderFieldValue == null,
+      "Cannot specify both sender and senderFieldValue",
+    );
+    assert(
+      receiver == _sentinel || receiverFieldValue == null,
+      "Cannot specify both receiver and receiverFieldValue",
     );
     final json = {
       if (createdAt != _sentinel)
         _$MessageFieldMap['createdAt']!: createdAt as DateTime,
       if (createdAtFieldValue != null)
         _$MessageFieldMap['createdAt']!: createdAtFieldValue,
-      if (key != _sentinel) _$MessageFieldMap['key']!: key as String,
-      if (keyFieldValue != null) _$MessageFieldMap['key']!: keyFieldValue,
       if (text != _sentinel) _$MessageFieldMap['text']!: text as String,
       if (textFieldValue != null) _$MessageFieldMap['text']!: textFieldValue,
-      if (user != _sentinel) _$MessageFieldMap['user']!: user as String,
-      if (userFieldValue != null) _$MessageFieldMap['user']!: userFieldValue,
+      if (sender != _sentinel) _$MessageFieldMap['sender']!: sender as String,
+      if (senderFieldValue != null)
+        _$MessageFieldMap['sender']!: senderFieldValue,
+      if (receiver != _sentinel)
+        _$MessageFieldMap['receiver']!: receiver as String?,
+      if (receiverFieldValue != null)
+        _$MessageFieldMap['receiver']!: receiverFieldValue,
     };
 
     return reference.update(json);
@@ -227,40 +230,43 @@ class _$MessageDocumentReference
     Transaction transaction, {
     Object? createdAt = _sentinel,
     FieldValue? createdAtFieldValue,
-    Object? key = _sentinel,
-    FieldValue? keyFieldValue,
     Object? text = _sentinel,
     FieldValue? textFieldValue,
-    Object? user = _sentinel,
-    FieldValue? userFieldValue,
+    Object? sender = _sentinel,
+    FieldValue? senderFieldValue,
+    Object? receiver = _sentinel,
+    FieldValue? receiverFieldValue,
   }) {
     assert(
       createdAt == _sentinel || createdAtFieldValue == null,
       "Cannot specify both createdAt and createdAtFieldValue",
     );
     assert(
-      key == _sentinel || keyFieldValue == null,
-      "Cannot specify both key and keyFieldValue",
-    );
-    assert(
       text == _sentinel || textFieldValue == null,
       "Cannot specify both text and textFieldValue",
     );
     assert(
-      user == _sentinel || userFieldValue == null,
-      "Cannot specify both user and userFieldValue",
+      sender == _sentinel || senderFieldValue == null,
+      "Cannot specify both sender and senderFieldValue",
+    );
+    assert(
+      receiver == _sentinel || receiverFieldValue == null,
+      "Cannot specify both receiver and receiverFieldValue",
     );
     final json = {
       if (createdAt != _sentinel)
         _$MessageFieldMap['createdAt']!: createdAt as DateTime,
       if (createdAtFieldValue != null)
         _$MessageFieldMap['createdAt']!: createdAtFieldValue,
-      if (key != _sentinel) _$MessageFieldMap['key']!: key as String,
-      if (keyFieldValue != null) _$MessageFieldMap['key']!: keyFieldValue,
       if (text != _sentinel) _$MessageFieldMap['text']!: text as String,
       if (textFieldValue != null) _$MessageFieldMap['text']!: textFieldValue,
-      if (user != _sentinel) _$MessageFieldMap['user']!: user as String,
-      if (userFieldValue != null) _$MessageFieldMap['user']!: userFieldValue,
+      if (sender != _sentinel) _$MessageFieldMap['sender']!: sender as String,
+      if (senderFieldValue != null)
+        _$MessageFieldMap['sender']!: senderFieldValue,
+      if (receiver != _sentinel)
+        _$MessageFieldMap['receiver']!: receiver as String?,
+      if (receiverFieldValue != null)
+        _$MessageFieldMap['receiver']!: receiverFieldValue,
     };
 
     transaction.update(reference, json);
@@ -373,17 +379,6 @@ abstract class MessageQuery
     List<DateTime>? whereIn,
     List<DateTime>? whereNotIn,
   });
-  MessageQuery whereKey({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
-  });
   MessageQuery whereText({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -395,7 +390,7 @@ abstract class MessageQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
-  MessageQuery whereUser({
+  MessageQuery whereSender({
     String? isEqualTo,
     String? isNotEqualTo,
     String? isLessThan,
@@ -405,6 +400,17 @@ abstract class MessageQuery
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
+  });
+  MessageQuery whereReceiver({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   });
 
   MessageQuery orderByDocumentId({
@@ -431,18 +437,6 @@ abstract class MessageQuery
     MessageDocumentSnapshot? startAfterDocument,
   });
 
-  MessageQuery orderByKey({
-    bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
-    MessageDocumentSnapshot? startAtDocument,
-    MessageDocumentSnapshot? endAtDocument,
-    MessageDocumentSnapshot? endBeforeDocument,
-    MessageDocumentSnapshot? startAfterDocument,
-  });
-
   MessageQuery orderByText({
     bool descending = false,
     String startAt,
@@ -455,12 +449,24 @@ abstract class MessageQuery
     MessageDocumentSnapshot? startAfterDocument,
   });
 
-  MessageQuery orderByUser({
+  MessageQuery orderBySender({
     bool descending = false,
     String startAt,
     String startAfter,
     String endAt,
     String endBefore,
+    MessageDocumentSnapshot? startAtDocument,
+    MessageDocumentSnapshot? endAtDocument,
+    MessageDocumentSnapshot? endBeforeDocument,
+    MessageDocumentSnapshot? startAfterDocument,
+  });
+
+  MessageQuery orderByReceiver({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
     MessageDocumentSnapshot? startAtDocument,
     MessageDocumentSnapshot? endAtDocument,
     MessageDocumentSnapshot? endBeforeDocument,
@@ -673,35 +679,6 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     );
   }
 
-  MessageQuery whereKey({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
-  }) {
-    return _$MessageQuery(
-      _collection,
-      $referenceWithoutCursor: $referenceWithoutCursor.where(
-        _$MessageFieldMap['key']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
-        isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
-      ),
-      $queryCursor: $queryCursor,
-    );
-  }
-
   MessageQuery whereText({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -731,7 +708,7 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     );
   }
 
-  MessageQuery whereUser({
+  MessageQuery whereSender({
     String? isEqualTo,
     String? isNotEqualTo,
     String? isLessThan,
@@ -745,7 +722,36 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     return _$MessageQuery(
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
-        _$MessageFieldMap['user']!,
+        _$MessageFieldMap['sender']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  MessageQuery whereReceiver({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$MessageQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$MessageFieldMap['receiver']!,
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -904,78 +910,6 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     );
   }
 
-  MessageQuery orderByKey({
-    bool descending = false,
-    Object? startAt = _sentinel,
-    Object? startAfter = _sentinel,
-    Object? endAt = _sentinel,
-    Object? endBefore = _sentinel,
-    MessageDocumentSnapshot? startAtDocument,
-    MessageDocumentSnapshot? endAtDocument,
-    MessageDocumentSnapshot? endBeforeDocument,
-    MessageDocumentSnapshot? startAfterDocument,
-  }) {
-    final query = $referenceWithoutCursor.orderBy(_$MessageFieldMap['key']!,
-        descending: descending);
-    var queryCursor = $queryCursor;
-
-    if (startAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAt: const [],
-        startAtDocumentSnapshot: startAtDocument.snapshot,
-      );
-    }
-    if (startAfterDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: const [],
-        startAfterDocumentSnapshot: startAfterDocument.snapshot,
-      );
-    }
-    if (endAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endAt: const [],
-        endAtDocumentSnapshot: endAtDocument.snapshot,
-      );
-    }
-    if (endBeforeDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: const [],
-        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
-      );
-    }
-
-    if (startAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAt: [...queryCursor.startAt, startAt],
-        startAtDocumentSnapshot: null,
-      );
-    }
-    if (startAfter != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: [...queryCursor.startAfter, startAfter],
-        startAfterDocumentSnapshot: null,
-      );
-    }
-    if (endAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endAt: [...queryCursor.endAt, endAt],
-        endAtDocumentSnapshot: null,
-      );
-    }
-    if (endBefore != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: [...queryCursor.endBefore, endBefore],
-        endBeforeDocumentSnapshot: null,
-      );
-    }
-
-    return _$MessageQuery(
-      _collection,
-      $referenceWithoutCursor: query,
-      $queryCursor: queryCursor,
-    );
-  }
-
   MessageQuery orderByText({
     bool descending = false,
     Object? startAt = _sentinel,
@@ -1048,7 +982,7 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     );
   }
 
-  MessageQuery orderByUser({
+  MessageQuery orderBySender({
     bool descending = false,
     Object? startAt = _sentinel,
     Object? startAfter = _sentinel,
@@ -1059,8 +993,80 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
     MessageDocumentSnapshot? endBeforeDocument,
     MessageDocumentSnapshot? startAfterDocument,
   }) {
-    final query = $referenceWithoutCursor.orderBy(_$MessageFieldMap['user']!,
+    final query = $referenceWithoutCursor.orderBy(_$MessageFieldMap['sender']!,
         descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$MessageQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  MessageQuery orderByReceiver({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    MessageDocumentSnapshot? startAtDocument,
+    MessageDocumentSnapshot? endAtDocument,
+    MessageDocumentSnapshot? endBeforeDocument,
+    MessageDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$MessageFieldMap['receiver']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -1220,16 +1226,18 @@ class MessageQueryDocumentSnapshot
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       json['text'] as String,
-      json['user'] as String,
+      json['sender'] as String,
       key: json['key'] as String? ?? '',
       createdAt: Converters.localTime(json['createdAt'] as Timestamp),
+      receiver: json['receiver'] as String?,
     );
 
 const _$MessageFieldMap = <String, String>{
   'createdAt': 'createdAt',
   'key': 'key',
   'text': 'text',
-  'user': 'user',
+  'sender': 'sender',
+  'receiver': 'receiver',
 };
 
 // ignore: unused_element
@@ -1241,12 +1249,15 @@ abstract class _$MessagePerFieldToJson {
   // ignore: unused_element
   static Object? text(String instance) => instance;
   // ignore: unused_element
-  static Object? user(String instance) => instance;
+  static Object? sender(String instance) => instance;
+  // ignore: unused_element
+  static Object? receiver(String? instance) => instance;
 }
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'createdAt': Converters.timestamp(instance.createdAt),
       'key': instance.key,
       'text': instance.text,
-      'user': instance.user,
+      'sender': instance.sender,
+      'receiver': instance.receiver,
     };

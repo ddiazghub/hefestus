@@ -1,27 +1,35 @@
 import 'package:hefestus/ui/firebase_central.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'controllers/authentication_controller.dart';
-import 'controllers/chat_controller.dart';
-import 'controllers/firestore_controller.dart';
-import 'controllers/user_controller.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static final validation = {
+    ValidationMessage.required: (_) => 'Field is mandatory',
+    ValidationMessage.email: (_) => 'Must enter a valid email',
+    ValidationMessage.minLength: (error) =>
+        'Field must have a minimum length of ${(error as Map)['requiredLength']}',
+    ValidationMessage.number: (_) => 'Field must be a number',
+    'uniqueEmail': (_) => 'This email is already in use',
+    'url': (_) => 'Field must be an URL',
+    'dateRange': (_) =>
+        'Invalid date range. Start time must be beform end time',
+  };
+
   @override
   Widget build(BuildContext context) {
-    Get.put(FirestoreController());
-    Get.put(ChatController());
-    Get.put(AuthController());
-    Get.put(UserController());
-
-    return GetMaterialApp(
+    return ReactiveFormConfig(
+      validationMessages: validation,
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Firebase demo',
+        title: 'Hefestus',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const FirebaseCentral());
+        home: const Central(),
+      ),
+    );
   }
 }

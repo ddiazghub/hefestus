@@ -1,124 +1,150 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
-import '../../data/model/message.dart';
-import '../controllers/authentication_controller.dart';
+import '../controllers/auth_controller.dart';
 import '../controllers/chat_controller.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class ChatPage extends StatelessWidget {
+  const ChatPage({super.key, this.receiver});
+
+  final String? receiver;
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 25.0),
+      child: Column(
+        children: [
+          ChatList(receiver: receiver),
+          ChatInput(receiver: receiver),
+        ],
+      ),
+    );
+  }
 }
 
-class _ChatPageState extends State<ChatPage> {
-  late TextEditingController _controller;
-  late ScrollController _scrollController;
-  ChatController chat = Get.find();
-  AuthController auth = Get.find();
+class ChatList extends StatefulWidget {
+  const ChatList({super.key, this.receiver});
+
+  final String? receiver;
+
+  @override
+  State<StatefulWidget> createState() => ChatListState();
+}
+
+class ChatListState extends State<ChatList> {
+  late ScrollController scroll;
+  final ChatController chat = Get.find();
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _scrollController = ScrollController();
-    chat.start();
+    scroll = ScrollController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _scrollController.dispose();
-    chat.stop();
     super.dispose();
+    scroll.dispose();
   }
 
-  Widget _item(Message element, int posicion, String uid) {
-    logInfo('Current user? -> ${uid == element.user} msg -> ${element.text}');
-    return Card(
-      margin: const EdgeInsets.all(4.0),
-      color: uid == element.user ? Colors.yellow[200] : Colors.grey[300],
-      child: ListTile(
-        onTap: () => chat.updateMsg(element),
-        onLongPress: () => chat.delete(element.key),
-        title: Text(
-          element.text,
-          textAlign: uid == element.user ? TextAlign.right : TextAlign.left,
-        ),
-      ),
+  void scrollToEnd(Duration _) async {
+    scroll.animateTo(
+      scroll.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
     );
-  }
-
-  Widget _list() {
-    logInfo('Current user ${auth.uid}');
-
-    return GetX<ChatController>(builder: (controller) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
-
-      return ListView.builder(
-        itemCount: chat.messages.length,
-        controller: _scrollController,
-        itemBuilder: (context, index) {
-          var element = chat.messages[index];
-          return _item(element, index, auth.uid!);
-        },
-      );
-    });
-  }
-
-  Future<void> _sendMsg(String text) async {
-    //FocusScope.of(context).requestFocus(FocusNode());
-    logInfo('Calling _sendMsg with $text');
-    await chat.send(text);
-  }
-
-  Widget _textInput() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Container(
-            margin: const EdgeInsets.only(left: 5.0, top: 5.0),
-            child: TextField(
-              key: const Key('MsgTextField'),
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Your message',
-              ),
-              onSubmitted: (value) {
-                _sendMsg(_controller.text);
-                _controller.clear();
-              },
-              controller: _controller,
-            ),
-          ),
-        ),
-        TextButton(
-            key: const Key('sendButton'),
-            child: const Text('Send'),
-            onPressed: () {
-              _sendMsg(_controller.text);
-              _controller.clear();
-            })
-      ],
-    );
-  }
-
-  _scrollToEnd() async {
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 25.0),
-      child: Column(
-        children: [Expanded(flex: 4, child: _list()), _textInput()],
-      ),
+    String uid = Get.find<AuthController>().uid!;
+    return Obx(() {
+      WidgetsBinding.instance.addPostFrameCallback(scrollToEnd);
+
+      print(widget.receiver);
+      final messages = widget.receiver == null
+          ? chat.global
+          : chat.where(uid, widget.receiver!);
+
+      return Expanded(
+        flex: 4,
+        child: ListView.builder(
+          itemCount: messages.length,
+          controller: scroll,
+          itemBuilder: (context, index) {
+            final element = messages[index];
+
+            return Card(
+              margin: const EdgeInsets.all(4.0),
+              color:
+                  uid == element.sender ? Colors.yellow[200] : Colors.grey[300],
+              child: ListTile(
+                onTap: () => chat.updateMsg(element.key, element.text),
+                onLongPress: () => chat.delete(element.key),
+                title: Text(
+                  element.text,
+                  textAlign:
+                      uid == element.sender ? TextAlign.right : TextAlign.left,
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    });
+  }
+}
+
+class ChatInput extends GetView<ChatController> {
+  const ChatInput({super.key, this.receiver});
+
+  final String? receiver;
+
+  static FormGroup form() => fb.group({
+        'input': ['']
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return ReactiveFormBuilder(
+      form: form,
+      builder: (context, form, child) {
+        void send() {
+          final String? value = form.control('input').value;
+
+          if (value != null && value.isNotEmpty) {
+            controller.send(value, receiver: receiver);
+            form.control('input').value = '';
+          }
+        }
+
+        return Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: const EdgeInsets.only(left: 5.0, top: 5.0),
+                child: ReactiveTextField<String>(
+                  key: const Key('MsgTextField'),
+                  formControlName: 'input',
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Your message',
+                  ),
+                  onSubmitted: (value) => send(),
+                ),
+              ),
+            ),
+            TextButton(
+              key: const Key('SendButton'),
+              onPressed: send,
+              child: const Text('Send'),
+            )
+          ],
+        );
+      },
     );
   }
 }

@@ -1,31 +1,45 @@
 import 'dart:async';
-import 'package:hefestus/ui/controllers/authentication_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/controllers/stream_controller.dart';
 import 'package:loggy/loggy.dart';
 import '../../data/model/user.dart';
 
-class UserController extends GetxController {
-  final _users = <AppUser>[].obs;
+class UserController extends StreamController<AppUserQuerySnapshot> {
+  final _users = <String, AppUser>{}.obs;
+  final AuthController auth = Get.find();
 
-  late StreamSubscription<AppUserQuerySnapshot> subscription;
+  RxMap<String, AppUser> get users => _users;
 
-  get users {
-    final auth = Get.find<AuthController>();
+  Iterable<AppUser> get otherUsers => _users.values.where((user) => user.uid != auth.uid);
 
-    return _users.where((entry) => entry.uid != auth.uid).toList();
+  AppUser? operator[](String key) => users[key];
+
+  void onReceive(AppUserQuerySnapshot snapshot) {
+    for (final doc in snapshot.docChanges) {
+      final user = doc.doc.data!;
+
+      switch (doc.type) {
+        case DocumentChangeType.added:
+          users[user.key] = user;
+          break;
+        case DocumentChangeType.modified:
+          users[user.key] = user;
+          break;
+        case DocumentChangeType.removed:
+          users.remove(user.key);
+      }
+    }
   }
 
-  get all => _users;
-
-  void start() {
-    _users.clear();
-
-    subscription = UserRef.snapshots().listen((snapshot) {
-      _users.value = [for (final doc in snapshot.docs) doc.data];
-    });
+  @override
+  Future<void> start() async {
+    if (!active) {
+      _users.clear();
+      subscription = UserRef.snapshots().listen(onReceive);
+    }
   }
-
-  Future<void> stop() async => await subscription.cancel();
 
   Future<void> create(AppUser user) async {
     logInfo('Creating user in realTime');

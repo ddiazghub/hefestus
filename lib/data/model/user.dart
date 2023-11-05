@@ -6,11 +6,11 @@ part 'user.g.dart';
 
 @FirestoreSerializable
 class AppUser {
-  AppUser(this.email, {required this.key, required uid});
+  AppUser(this.email, {required this.key, required this.uid});
 
   @Id()
   final String key;
-  late final String uid;
+  final String uid;
   final String email;
 
   factory AppUser.fromJson(Map<String, dynamic> json) =>
@@ -21,10 +21,10 @@ class AppUser {
 
 class AuthUser extends AppUser {
   AuthUser(super.email, this.password) : super(key: '', uid: '');
-  
-  AppUser withUid(String uid) => AppUser(email, uid: uid, key: key);
 
   final String password;
+  
+  AppUser withUid(String uid) => AppUser(email, uid: uid, key: key);
 }
 
 @Collection<AppUser>('users')

@@ -1,42 +1,86 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:hefestus/ui/controllers/authentication_controller.dart';
+import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/controllers/stream_controller.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../data/model/message.dart';
 
-class ChatController extends GetxController {
-  final _messages = <Message>[].obs;
+class ChatController extends StreamController<MessageQuerySnapshot> {
+  final _messages = <(String, String)?, RxList<Message>>{}.obs;
 
-  List<Message> get messages => _messages;
+  RxMap<(String, String)?, RxList<Message>> get messages => _messages;
+  RxList<Message> get global => messages[null] ?? <Message>[].obs;
 
-  late StreamSubscription<MessageQuerySnapshot> subscription;
+  RxList<Message> where(String user1, String user2) =>
+      messages[(user1, user2)] ?? <Message>[].obs;
 
-  void start() {
-    messages.clear();
-    subscription = MessageRef.orderByCreatedAt().snapshots().listen((snapshot) {
-      _messages.value = [for (final doc in snapshot.docs) doc.data];
-    });
+  List<Message> chatFor(Message message) {
+    if (message.receiver == null) {
+      messages[null] ??= <Message>[].obs;
+
+      return messages[null]!;
+    } else {
+      final chat = <Message>[].obs;
+      messages[(message.sender, message.receiver!)] ??= chat;
+      messages[(message.receiver!, message.sender)] ??= chat;
+
+      return messages[(message.sender, message.receiver)]!;
+    }
   }
 
-  void stop() => subscription.cancel();
+  void onReceive(MessageQuerySnapshot snapshot) {
+    for (final doc in snapshot.docChanges) {
+      final message = doc.doc.data!;
+      final chat = chatFor(message);
+      print('New Message: ${message.text}, type: ${doc.type}');
+      print('Sender: ${message.sender}');
+      print('Receiver: ${message.receiver}');
+      print('Before: $chat');
 
-  Future<void> updateMsg(Message message) async {
+      bool getByKey(msg) => msg.key == message.key;
+
+      switch (doc.type) {
+        case DocumentChangeType.added:
+          chat.add(message);
+          break;
+        case DocumentChangeType.modified:
+          final index = chat.indexWhere(getByKey);
+          chat[index] = message;
+          break;
+        case DocumentChangeType.removed:
+          chat.removeWhere(getByKey);
+      }
+
+      print('After: $chat');
+    }
+  }
+
+  static int orderByDate(Message a, Message b) =>
+      a.createdAt.compareTo(b.createdAt);
+
+  @override
+  Future<void> start() async {
+    if (!active) {
+      messages.clear();
+      subscription = MessageRef.orderByCreatedAt().snapshots().listen(onReceive);
+    }
+  }
+
+  Future<void> updateMsg(String key, String text) async {
     try {
-      await MessageRef.doc(message.key).update(
-        text: message.text,
-        user: message.user,
-      );
+      await MessageRef.doc(key).update(text: text);
     } catch (error) {
       logError(error);
       return Future.error(error);
     }
   }
 
-  Future<void> send(String text) async {
+  Future<void> send(String text, {String? receiver}) async {
     final uid = Get.find<AuthController>().uid!;
-    final message = Message(text, uid);
+    final message = Message(text, uid, receiver: receiver);
 
     try {
       await MessageRef.add(message);

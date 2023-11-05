@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/user.dart';
 
-import '../../controllers/authentication_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -17,8 +17,11 @@ class LoginPage extends StatelessWidget {
 
   void signIn() async {
     for (final user in defaultUsers) {
-      auth.signup(user);
+      await auth.signup(user);
+      await auth.logout();
     }
+
+    await auth.login(defaultUsers[0].email, defaultUsers[0].password);
   }
 
   void login(user) {
@@ -31,19 +34,23 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    onPressed: () => login('a@a.com'),
-                    child: const Text('Login with a@a.com')),
-                ElevatedButton(
-                    onPressed: () => login('b@b.com'),
-                    child: const Text('Login with b@b.com')),
-                ElevatedButton(
-                    onPressed: () => login('c@c.com'),
-                    child: const Text('Login with c@c.com')),
-                ElevatedButton(onPressed: signIn, child: const Text('Sign in')),
-              ]),
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                onPressed: () => login('a@a.com'),
+                child: const Text('Login with a@a.com'),
+              ),
+              ElevatedButton(
+                onPressed: () => login('b@b.com'),
+                child: const Text('Login with b@b.com'),
+              ),
+              ElevatedButton(
+                onPressed: () => login('c@c.com'),
+                child: const Text('Login with c@c.com'),
+              ),
+              ElevatedButton(onPressed: signIn, child: const Text('Sign in')),
+            ],
+          ),
         ),
       ),
     );
