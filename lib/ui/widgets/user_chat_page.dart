@@ -41,17 +41,19 @@ class UserList extends GetView<UserController> {
       );
     }
 
-    final users = controller.otherUsers.toList();
+    return Obx(() {
+      final users = controller.otherUsers.toList();
 
-    if (users.isEmpty) {
-      return const Center(
-        child: Text('No users'),
+      if (users.isEmpty) {
+        return const Center(
+          child: Text('No users'),
+        );
+      }
+
+      return ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) => item(users[index]),
       );
-    }
-
-    return ListView.builder(
-      itemCount: users.length,
-      itemBuilder: (context, index) => item(users[index]),
-    );
+    });
   }
 }

@@ -835,6 +835,7 @@ Temporary Items
 
 # Include any specific files here.
 **/firebase_options.dart
+secrets.json
 
 ### ---------------------------- References ---------------------------- ###
 
