@@ -131,6 +131,8 @@ abstract class AppUserDocumentReference
     FieldValue nameFieldValue,
     String phone,
     FieldValue phoneFieldValue,
+    String image,
+    FieldValue imageFieldValue,
     DateTime birthday,
     FieldValue birthdayFieldValue,
     String uid,
@@ -148,6 +150,8 @@ abstract class AppUserDocumentReference
     FieldValue nameFieldValue,
     String phone,
     FieldValue phoneFieldValue,
+    String image,
+    FieldValue imageFieldValue,
     DateTime birthday,
     FieldValue birthdayFieldValue,
     String uid,
@@ -190,6 +194,8 @@ class _$AppUserDocumentReference
     FieldValue? nameFieldValue,
     Object? phone = _sentinel,
     FieldValue? phoneFieldValue,
+    Object? image = _sentinel,
+    FieldValue? imageFieldValue,
     Object? birthday = _sentinel,
     FieldValue? birthdayFieldValue,
     Object? uid = _sentinel,
@@ -204,6 +210,10 @@ class _$AppUserDocumentReference
     assert(
       phone == _sentinel || phoneFieldValue == null,
       "Cannot specify both phone and phoneFieldValue",
+    );
+    assert(
+      image == _sentinel || imageFieldValue == null,
+      "Cannot specify both image and imageFieldValue",
     );
     assert(
       birthday == _sentinel || birthdayFieldValue == null,
@@ -222,6 +232,8 @@ class _$AppUserDocumentReference
       if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
       if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
       if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
+      if (image != _sentinel) _$AppUserFieldMap['image']!: image as String,
+      if (imageFieldValue != null) _$AppUserFieldMap['image']!: imageFieldValue,
       if (birthday != _sentinel)
         _$AppUserFieldMap['birthday']!: birthday as DateTime,
       if (birthdayFieldValue != null)
@@ -241,6 +253,8 @@ class _$AppUserDocumentReference
     FieldValue? nameFieldValue,
     Object? phone = _sentinel,
     FieldValue? phoneFieldValue,
+    Object? image = _sentinel,
+    FieldValue? imageFieldValue,
     Object? birthday = _sentinel,
     FieldValue? birthdayFieldValue,
     Object? uid = _sentinel,
@@ -255,6 +269,10 @@ class _$AppUserDocumentReference
     assert(
       phone == _sentinel || phoneFieldValue == null,
       "Cannot specify both phone and phoneFieldValue",
+    );
+    assert(
+      image == _sentinel || imageFieldValue == null,
+      "Cannot specify both image and imageFieldValue",
     );
     assert(
       birthday == _sentinel || birthdayFieldValue == null,
@@ -273,6 +291,8 @@ class _$AppUserDocumentReference
       if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
       if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
       if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
+      if (image != _sentinel) _$AppUserFieldMap['image']!: image as String,
+      if (imageFieldValue != null) _$AppUserFieldMap['image']!: imageFieldValue,
       if (birthday != _sentinel)
         _$AppUserFieldMap['birthday']!: birthday as DateTime,
       if (birthdayFieldValue != null)
@@ -404,6 +424,17 @@ abstract class AppUserQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
+  AppUserQuery whereImage({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
   AppUserQuery whereBirthday({
     DateTime? isEqualTo,
     DateTime? isNotEqualTo,
@@ -463,6 +494,18 @@ abstract class AppUserQuery
   });
 
   AppUserQuery orderByPhone({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  });
+
+  AppUserQuery orderByImage({
     bool descending = false,
     String startAt,
     String startAfter,
@@ -745,6 +788,35 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
     );
   }
 
+  AppUserQuery whereImage({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$AppUserFieldMap['image']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
   AppUserQuery whereBirthday({
     DateTime? isEqualTo,
     DateTime? isNotEqualTo,
@@ -988,6 +1060,78 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
     AppUserDocumentSnapshot? startAfterDocument,
   }) {
     final query = $referenceWithoutCursor.orderBy(_$AppUserFieldMap['phone']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  AppUserQuery orderByImage({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$AppUserFieldMap['image']!,
         descending: descending);
     var queryCursor = $queryCursor;
 
@@ -1358,6 +1502,1063 @@ class AppUserQueryDocumentSnapshot
   }
 }
 
+/// A collection reference object can be used for adding documents,
+/// getting document references, and querying for documents
+/// (using the methods inherited from Query).
+abstract class StoreUserCollectionReference
+    implements
+        StoreUserQuery,
+        FirestoreCollectionReference<StoreUser, StoreUserQuerySnapshot> {
+  factory StoreUserCollectionReference([
+    FirebaseFirestore? firestore,
+  ]) = _$StoreUserCollectionReference;
+
+  static StoreUser fromFirestore(
+    DocumentSnapshot<Map<String, Object?>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    return StoreUser.fromJson({'key': snapshot.id, ...?snapshot.data()});
+  }
+
+  static Map<String, Object?> toFirestore(
+    StoreUser value,
+    SetOptions? options,
+  ) {
+    return {...value.toJson()}..remove('key');
+  }
+
+  @override
+  CollectionReference<StoreUser> get reference;
+
+  @override
+  StoreUserDocumentReference doc([String? id]);
+
+  /// Add a new document to this collection with the specified data,
+  /// assigning it a document ID automatically.
+  Future<StoreUserDocumentReference> add(StoreUser value);
+}
+
+class _$StoreUserCollectionReference extends _$StoreUserQuery
+    implements StoreUserCollectionReference {
+  factory _$StoreUserCollectionReference([FirebaseFirestore? firestore]) {
+    firestore ??= FirebaseFirestore.instance;
+
+    return _$StoreUserCollectionReference._(
+      firestore.collection('stores').withConverter(
+            fromFirestore: StoreUserCollectionReference.fromFirestore,
+            toFirestore: StoreUserCollectionReference.toFirestore,
+          ),
+    );
+  }
+
+  _$StoreUserCollectionReference._(
+    CollectionReference<StoreUser> reference,
+  ) : super(reference, $referenceWithoutCursor: reference);
+
+  String get path => reference.path;
+
+  @override
+  CollectionReference<StoreUser> get reference =>
+      super.reference as CollectionReference<StoreUser>;
+
+  @override
+  StoreUserDocumentReference doc([String? id]) {
+    assert(
+      id == null || id.split('/').length == 1,
+      'The document ID cannot be from a different collection',
+    );
+    return StoreUserDocumentReference(
+      reference.doc(id),
+    );
+  }
+
+  @override
+  Future<StoreUserDocumentReference> add(StoreUser value) {
+    return reference.add(value).then((ref) => StoreUserDocumentReference(ref));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _$StoreUserCollectionReference &&
+        other.runtimeType == runtimeType &&
+        other.reference == reference;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reference);
+}
+
+abstract class StoreUserDocumentReference
+    extends FirestoreDocumentReference<StoreUser, StoreUserDocumentSnapshot> {
+  factory StoreUserDocumentReference(DocumentReference<StoreUser> reference) =
+      _$StoreUserDocumentReference;
+
+  DocumentReference<StoreUser> get reference;
+
+  /// A reference to the [StoreUserCollectionReference] containing this document.
+  StoreUserCollectionReference get parent {
+    return _$StoreUserCollectionReference(reference.firestore);
+  }
+
+  @override
+  Stream<StoreUserDocumentSnapshot> snapshots();
+
+  @override
+  Future<StoreUserDocumentSnapshot> get([GetOptions? options]);
+
+  @override
+  Future<void> delete();
+
+  /// Updates data on the document. Data will be merged with any existing
+  /// document data.
+  ///
+  /// If no document exists yet, the update will fail.
+  Future<void> update({
+    String place,
+    FieldValue placeFieldValue,
+    String uid,
+    FieldValue uidFieldValue,
+    String email,
+    FieldValue emailFieldValue,
+  });
+
+  /// Updates fields in the current document using the transaction API.
+  ///
+  /// The update will fail if applied to a document that does not exist.
+  void transactionUpdate(
+    Transaction transaction, {
+    String place,
+    FieldValue placeFieldValue,
+    String uid,
+    FieldValue uidFieldValue,
+    String email,
+    FieldValue emailFieldValue,
+  });
+}
+
+class _$StoreUserDocumentReference
+    extends FirestoreDocumentReference<StoreUser, StoreUserDocumentSnapshot>
+    implements StoreUserDocumentReference {
+  _$StoreUserDocumentReference(this.reference);
+
+  @override
+  final DocumentReference<StoreUser> reference;
+
+  /// A reference to the [StoreUserCollectionReference] containing this document.
+  StoreUserCollectionReference get parent {
+    return _$StoreUserCollectionReference(reference.firestore);
+  }
+
+  @override
+  Stream<StoreUserDocumentSnapshot> snapshots() {
+    return reference.snapshots().map(StoreUserDocumentSnapshot._);
+  }
+
+  @override
+  Future<StoreUserDocumentSnapshot> get([GetOptions? options]) {
+    return reference.get(options).then(StoreUserDocumentSnapshot._);
+  }
+
+  @override
+  Future<StoreUserDocumentSnapshot> transactionGet(Transaction transaction) {
+    return transaction.get(reference).then(StoreUserDocumentSnapshot._);
+  }
+
+  Future<void> update({
+    Object? place = _sentinel,
+    FieldValue? placeFieldValue,
+    Object? uid = _sentinel,
+    FieldValue? uidFieldValue,
+    Object? email = _sentinel,
+    FieldValue? emailFieldValue,
+  }) async {
+    assert(
+      place == _sentinel || placeFieldValue == null,
+      "Cannot specify both place and placeFieldValue",
+    );
+    assert(
+      uid == _sentinel || uidFieldValue == null,
+      "Cannot specify both uid and uidFieldValue",
+    );
+    assert(
+      email == _sentinel || emailFieldValue == null,
+      "Cannot specify both email and emailFieldValue",
+    );
+    final json = {
+      if (place != _sentinel) _$StoreUserFieldMap['place']!: place as String,
+      if (placeFieldValue != null)
+        _$StoreUserFieldMap['place']!: placeFieldValue,
+      if (uid != _sentinel) _$StoreUserFieldMap['uid']!: uid as String,
+      if (uidFieldValue != null) _$StoreUserFieldMap['uid']!: uidFieldValue,
+      if (email != _sentinel) _$StoreUserFieldMap['email']!: email as String,
+      if (emailFieldValue != null)
+        _$StoreUserFieldMap['email']!: emailFieldValue,
+    };
+
+    return reference.update(json);
+  }
+
+  void transactionUpdate(
+    Transaction transaction, {
+    Object? place = _sentinel,
+    FieldValue? placeFieldValue,
+    Object? uid = _sentinel,
+    FieldValue? uidFieldValue,
+    Object? email = _sentinel,
+    FieldValue? emailFieldValue,
+  }) {
+    assert(
+      place == _sentinel || placeFieldValue == null,
+      "Cannot specify both place and placeFieldValue",
+    );
+    assert(
+      uid == _sentinel || uidFieldValue == null,
+      "Cannot specify both uid and uidFieldValue",
+    );
+    assert(
+      email == _sentinel || emailFieldValue == null,
+      "Cannot specify both email and emailFieldValue",
+    );
+    final json = {
+      if (place != _sentinel) _$StoreUserFieldMap['place']!: place as String,
+      if (placeFieldValue != null)
+        _$StoreUserFieldMap['place']!: placeFieldValue,
+      if (uid != _sentinel) _$StoreUserFieldMap['uid']!: uid as String,
+      if (uidFieldValue != null) _$StoreUserFieldMap['uid']!: uidFieldValue,
+      if (email != _sentinel) _$StoreUserFieldMap['email']!: email as String,
+      if (emailFieldValue != null)
+        _$StoreUserFieldMap['email']!: emailFieldValue,
+    };
+
+    transaction.update(reference, json);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is StoreUserDocumentReference &&
+        other.runtimeType == runtimeType &&
+        other.parent == parent &&
+        other.id == id;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, parent, id);
+}
+
+abstract class StoreUserQuery
+    implements QueryReference<StoreUser, StoreUserQuerySnapshot> {
+  @override
+  StoreUserQuery limit(int limit);
+
+  @override
+  StoreUserQuery limitToLast(int limit);
+
+  /// Perform an order query based on a [FieldPath].
+  ///
+  /// This method is considered unsafe as it does check that the field path
+  /// maps to a valid property or that parameters such as [isEqualTo] receive
+  /// a value of the correct type.
+  ///
+  /// If possible, instead use the more explicit variant of order queries:
+  ///
+  /// **AVOID**:
+  /// ```dart
+  /// collection.orderByFieldPath(
+  ///   FieldPath.fromString('title'),
+  ///   startAt: 'title',
+  /// );
+  /// ```
+  ///
+  /// **PREFER**:
+  /// ```dart
+  /// collection.orderByTitle(startAt: 'title');
+  /// ```
+  StoreUserQuery orderByFieldPath(
+    FieldPath fieldPath, {
+    bool descending = false,
+    Object? startAt,
+    Object? startAfter,
+    Object? endAt,
+    Object? endBefore,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  });
+
+  /// Perform a where query based on a [FieldPath].
+  ///
+  /// This method is considered unsafe as it does check that the field path
+  /// maps to a valid property or that parameters such as [isEqualTo] receive
+  /// a value of the correct type.
+  ///
+  /// If possible, instead use the more explicit variant of where queries:
+  ///
+  /// **AVOID**:
+  /// ```dart
+  /// collection.whereFieldPath(FieldPath.fromString('title'), isEqualTo: 'title');
+  /// ```
+  ///
+  /// **PREFER**:
+  /// ```dart
+  /// collection.whereTitle(isEqualTo: 'title');
+  /// ```
+  StoreUserQuery whereFieldPath(
+    FieldPath fieldPath, {
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    List<Object?>? arrayContainsAny,
+    List<Object?>? whereIn,
+    List<Object?>? whereNotIn,
+    bool? isNull,
+  });
+
+  StoreUserQuery whereDocumentId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  StoreUserQuery wherePlace({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  StoreUserQuery whereUid({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  StoreUserQuery whereEmail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+
+  StoreUserQuery orderByDocumentId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  });
+
+  StoreUserQuery orderByPlace({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  });
+
+  StoreUserQuery orderByUid({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  });
+
+  StoreUserQuery orderByEmail({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  });
+}
+
+class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
+    implements StoreUserQuery {
+  _$StoreUserQuery(
+    this._collection, {
+    required Query<StoreUser> $referenceWithoutCursor,
+    $QueryCursor $queryCursor = const $QueryCursor(),
+  }) : super(
+          $referenceWithoutCursor: $referenceWithoutCursor,
+          $queryCursor: $queryCursor,
+        );
+
+  final CollectionReference<Object?> _collection;
+
+  @override
+  Stream<StoreUserQuerySnapshot> snapshots([SnapshotOptions? options]) {
+    return reference.snapshots().map(StoreUserQuerySnapshot._fromQuerySnapshot);
+  }
+
+  @override
+  Future<StoreUserQuerySnapshot> get([GetOptions? options]) {
+    return reference
+        .get(options)
+        .then(StoreUserQuerySnapshot._fromQuerySnapshot);
+  }
+
+  @override
+  StoreUserQuery limit(int limit) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.limit(limit),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  @override
+  StoreUserQuery limitToLast(int limit) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.limitToLast(limit),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery orderByFieldPath(
+    FieldPath fieldPath, {
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query =
+        $referenceWithoutCursor.orderBy(fieldPath, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  StoreUserQuery whereFieldPath(
+    FieldPath fieldPath, {
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    List<Object?>? arrayContainsAny,
+    List<Object?>? whereIn,
+    List<Object?>? whereNotIn,
+    bool? isNull,
+  }) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        fieldPath,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        arrayContains: arrayContains,
+        arrayContainsAny: arrayContainsAny,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+        isNull: isNull,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery whereDocumentId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        FieldPath.documentId,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery wherePlace({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$StoreUserFieldMap['place']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery whereUid({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$StoreUserFieldMap['uid']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery whereEmail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$StoreUserFieldMap['email']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StoreUserQuery orderByDocumentId({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  StoreUserQuery orderByPlace({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$StoreUserFieldMap['place']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  StoreUserQuery orderByUid({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$StoreUserFieldMap['uid']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  StoreUserQuery orderByEmail({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StoreUserDocumentSnapshot? startAtDocument,
+    StoreUserDocumentSnapshot? endAtDocument,
+    StoreUserDocumentSnapshot? endBeforeDocument,
+    StoreUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$StoreUserFieldMap['email']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$StoreUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _$StoreUserQuery &&
+        other.runtimeType == runtimeType &&
+        other.reference == reference;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reference);
+}
+
+class StoreUserDocumentSnapshot extends FirestoreDocumentSnapshot<StoreUser> {
+  StoreUserDocumentSnapshot._(this.snapshot) : data = snapshot.data();
+
+  @override
+  final DocumentSnapshot<StoreUser> snapshot;
+
+  @override
+  StoreUserDocumentReference get reference {
+    return StoreUserDocumentReference(
+      snapshot.reference,
+    );
+  }
+
+  @override
+  final StoreUser? data;
+}
+
+class StoreUserQuerySnapshot
+    extends FirestoreQuerySnapshot<StoreUser, StoreUserQueryDocumentSnapshot> {
+  StoreUserQuerySnapshot._(
+    this.snapshot,
+    this.docs,
+    this.docChanges,
+  );
+
+  factory StoreUserQuerySnapshot._fromQuerySnapshot(
+    QuerySnapshot<StoreUser> snapshot,
+  ) {
+    final docs = snapshot.docs.map(StoreUserQueryDocumentSnapshot._).toList();
+
+    final docChanges = snapshot.docChanges.map((change) {
+      return _decodeDocumentChange(
+        change,
+        StoreUserDocumentSnapshot._,
+      );
+    }).toList();
+
+    return StoreUserQuerySnapshot._(
+      snapshot,
+      docs,
+      docChanges,
+    );
+  }
+
+  static FirestoreDocumentChange<StoreUserDocumentSnapshot>
+      _decodeDocumentChange<T>(
+    DocumentChange<T> docChange,
+    StoreUserDocumentSnapshot Function(DocumentSnapshot<T> doc) decodeDoc,
+  ) {
+    return FirestoreDocumentChange<StoreUserDocumentSnapshot>(
+      type: docChange.type,
+      oldIndex: docChange.oldIndex,
+      newIndex: docChange.newIndex,
+      doc: decodeDoc(docChange.doc),
+    );
+  }
+
+  final QuerySnapshot<StoreUser> snapshot;
+
+  @override
+  final List<StoreUserQueryDocumentSnapshot> docs;
+
+  @override
+  final List<FirestoreDocumentChange<StoreUserDocumentSnapshot>> docChanges;
+}
+
+class StoreUserQueryDocumentSnapshot
+    extends FirestoreQueryDocumentSnapshot<StoreUser>
+    implements StoreUserDocumentSnapshot {
+  StoreUserQueryDocumentSnapshot._(this.snapshot) : data = snapshot.data();
+
+  @override
+  final QueryDocumentSnapshot<StoreUser> snapshot;
+
+  @override
+  final StoreUser data;
+
+  @override
+  StoreUserDocumentReference get reference {
+    return StoreUserDocumentReference(snapshot.reference);
+  }
+}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -1400,6 +2601,7 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
       json['name'] as String,
       json['phone'] as String,
       Converters.localTime(json['birthday'] as Timestamp),
+      json['image'] as String,
       key: json['key'] as String,
       uid: json['uid'] as String,
     );
@@ -1410,6 +2612,7 @@ const _$AppUserFieldMap = <String, String>{
   'email': 'email',
   'name': 'name',
   'phone': 'phone',
+  'image': 'image',
   'birthday': 'birthday',
 };
 
@@ -1426,6 +2629,8 @@ abstract class _$AppUserPerFieldToJson {
   // ignore: unused_element
   static Object? phone(String instance) => instance;
   // ignore: unused_element
+  static Object? image(String instance) => instance;
+  // ignore: unused_element
   static Object? birthday(DateTime instance) => Converters.timestamp(instance);
 }
 
@@ -1435,5 +2640,6 @@ Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'email': instance.email,
       'name': instance.name,
       'phone': instance.phone,
+      'image': instance.image,
       'birthday': Converters.timestamp(instance.birthday),
     };

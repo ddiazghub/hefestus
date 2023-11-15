@@ -16,3 +16,18 @@ abstract class StreamController<T> extends GetxController {
     subscription = null;
   }
 }
+
+abstract class MultiStreamController<T, E> extends StreamController<T> {
+  StreamSubscription<E>? subscription2;
+
+  @mustCallSuper
+  Future<void> start() async => stop();
+
+  @override
+  void stop() {
+    subscription?.cancel();
+    subscription2?.cancel();
+    subscription = null;
+    subscription2 = null;
+  }
+}

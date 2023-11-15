@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/user.dart';
+import 'package:hefestus/data/usecase/avatar_usecase.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
 import 'package:hefestus/ui/widgets/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,8 +58,7 @@ class SignUpPage extends GetView<AuthController> {
           Future<void> signup() async {
             if (form.valid) {
               logInfo(form.value);
-              // final avatar = Get.find<AvatarService>();
-              // final url = await avatar.create(image.value!);
+              final url = await AvatarUsecase.create(picker.image!);
 
               final String email = form.control('email').value;
               final String name = form.control('name').value;
@@ -66,11 +66,12 @@ class SignUpPage extends GetView<AuthController> {
               final DateTime birthday = form.control('birthday').value;
               final String password = form.control('password').value;
 
-              final user = AuthUser(
+              final user = AppAuthUser(
                 email,
                 name,
                 phone,
                 birthday,
+                url,
                 password,
               );
 

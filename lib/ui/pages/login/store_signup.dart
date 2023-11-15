@@ -53,11 +53,9 @@ class StoreSignUpPage extends GetView<AuthController> {
               final DateTime birthday = form.control('birthday').value;
               final String password = form.control('password').value;
 
-              final user = AuthUser(
+              final user = StoreAuthUser(
                 email,
-                name,
-                phone,
-                birthday,
+                'None',
                 password,
               );
 
