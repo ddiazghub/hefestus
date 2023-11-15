@@ -1,4 +1,4 @@
-import 'package:hefestus/ui/firebase_central.dart';
+import 'package:hefestus/ui/central.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';

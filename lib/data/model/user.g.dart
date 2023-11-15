@@ -127,6 +127,12 @@ abstract class AppUserDocumentReference
   ///
   /// If no document exists yet, the update will fail.
   Future<void> update({
+    String name,
+    FieldValue nameFieldValue,
+    String phone,
+    FieldValue phoneFieldValue,
+    DateTime birthday,
+    FieldValue birthdayFieldValue,
     String uid,
     FieldValue uidFieldValue,
     String email,
@@ -138,6 +144,12 @@ abstract class AppUserDocumentReference
   /// The update will fail if applied to a document that does not exist.
   void transactionUpdate(
     Transaction transaction, {
+    String name,
+    FieldValue nameFieldValue,
+    String phone,
+    FieldValue phoneFieldValue,
+    DateTime birthday,
+    FieldValue birthdayFieldValue,
     String uid,
     FieldValue uidFieldValue,
     String email,
@@ -174,11 +186,29 @@ class _$AppUserDocumentReference
   }
 
   Future<void> update({
+    Object? name = _sentinel,
+    FieldValue? nameFieldValue,
+    Object? phone = _sentinel,
+    FieldValue? phoneFieldValue,
+    Object? birthday = _sentinel,
+    FieldValue? birthdayFieldValue,
     Object? uid = _sentinel,
     FieldValue? uidFieldValue,
     Object? email = _sentinel,
     FieldValue? emailFieldValue,
   }) async {
+    assert(
+      name == _sentinel || nameFieldValue == null,
+      "Cannot specify both name and nameFieldValue",
+    );
+    assert(
+      phone == _sentinel || phoneFieldValue == null,
+      "Cannot specify both phone and phoneFieldValue",
+    );
+    assert(
+      birthday == _sentinel || birthdayFieldValue == null,
+      "Cannot specify both birthday and birthdayFieldValue",
+    );
     assert(
       uid == _sentinel || uidFieldValue == null,
       "Cannot specify both uid and uidFieldValue",
@@ -188,6 +218,14 @@ class _$AppUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
+      if (name != _sentinel) _$AppUserFieldMap['name']!: name as String,
+      if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
+      if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
+      if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
+      if (birthday != _sentinel)
+        _$AppUserFieldMap['birthday']!: birthday as DateTime,
+      if (birthdayFieldValue != null)
+        _$AppUserFieldMap['birthday']!: birthdayFieldValue,
       if (uid != _sentinel) _$AppUserFieldMap['uid']!: uid as String,
       if (uidFieldValue != null) _$AppUserFieldMap['uid']!: uidFieldValue,
       if (email != _sentinel) _$AppUserFieldMap['email']!: email as String,
@@ -199,11 +237,29 @@ class _$AppUserDocumentReference
 
   void transactionUpdate(
     Transaction transaction, {
+    Object? name = _sentinel,
+    FieldValue? nameFieldValue,
+    Object? phone = _sentinel,
+    FieldValue? phoneFieldValue,
+    Object? birthday = _sentinel,
+    FieldValue? birthdayFieldValue,
     Object? uid = _sentinel,
     FieldValue? uidFieldValue,
     Object? email = _sentinel,
     FieldValue? emailFieldValue,
   }) {
+    assert(
+      name == _sentinel || nameFieldValue == null,
+      "Cannot specify both name and nameFieldValue",
+    );
+    assert(
+      phone == _sentinel || phoneFieldValue == null,
+      "Cannot specify both phone and phoneFieldValue",
+    );
+    assert(
+      birthday == _sentinel || birthdayFieldValue == null,
+      "Cannot specify both birthday and birthdayFieldValue",
+    );
     assert(
       uid == _sentinel || uidFieldValue == null,
       "Cannot specify both uid and uidFieldValue",
@@ -213,6 +269,14 @@ class _$AppUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
+      if (name != _sentinel) _$AppUserFieldMap['name']!: name as String,
+      if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
+      if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
+      if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
+      if (birthday != _sentinel)
+        _$AppUserFieldMap['birthday']!: birthday as DateTime,
+      if (birthdayFieldValue != null)
+        _$AppUserFieldMap['birthday']!: birthdayFieldValue,
       if (uid != _sentinel) _$AppUserFieldMap['uid']!: uid as String,
       if (uidFieldValue != null) _$AppUserFieldMap['uid']!: uidFieldValue,
       if (email != _sentinel) _$AppUserFieldMap['email']!: email as String,
@@ -318,6 +382,39 @@ abstract class AppUserQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
+  AppUserQuery whereName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  AppUserQuery wherePhone({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  AppUserQuery whereBirthday({
+    DateTime? isEqualTo,
+    DateTime? isNotEqualTo,
+    DateTime? isLessThan,
+    DateTime? isLessThanOrEqualTo,
+    DateTime? isGreaterThan,
+    DateTime? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<DateTime>? whereIn,
+    List<DateTime>? whereNotIn,
+  });
   AppUserQuery whereUid({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -347,6 +444,42 @@ abstract class AppUserQuery
     String startAfter,
     String endAt,
     String endBefore,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  });
+
+  AppUserQuery orderByName({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  });
+
+  AppUserQuery orderByPhone({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  });
+
+  AppUserQuery orderByBirthday({
+    bool descending = false,
+    DateTime startAt,
+    DateTime startAfter,
+    DateTime endAt,
+    DateTime endBefore,
     AppUserDocumentSnapshot? startAtDocument,
     AppUserDocumentSnapshot? endAtDocument,
     AppUserDocumentSnapshot? endBeforeDocument,
@@ -554,6 +687,93 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
     );
   }
 
+  AppUserQuery whereName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$AppUserFieldMap['name']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  AppUserQuery wherePhone({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$AppUserFieldMap['phone']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  AppUserQuery whereBirthday({
+    DateTime? isEqualTo,
+    DateTime? isNotEqualTo,
+    DateTime? isLessThan,
+    DateTime? isLessThanOrEqualTo,
+    DateTime? isGreaterThan,
+    DateTime? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<DateTime>? whereIn,
+    List<DateTime>? whereNotIn,
+  }) {
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$AppUserFieldMap['birthday']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
   AppUserQuery whereUid({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -625,6 +845,222 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
         descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  AppUserQuery orderByName({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$AppUserFieldMap['name']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  AppUserQuery orderByPhone({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$AppUserFieldMap['phone']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$AppUserQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  AppUserQuery orderByBirthday({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    AppUserDocumentSnapshot? startAtDocument,
+    AppUserDocumentSnapshot? endAtDocument,
+    AppUserDocumentSnapshot? endBeforeDocument,
+    AppUserDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$AppUserFieldMap['birthday']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -926,8 +1362,44 @@ class AppUserQueryDocumentSnapshot
 // JsonSerializableGenerator
 // **************************************************************************
 
+StoreUser _$StoreUserFromJson(Map<String, dynamic> json) => StoreUser(
+      json['email'] as String,
+      json['place'] as String,
+      key: json['key'] as String,
+      uid: json['uid'] as String,
+    );
+
+const _$StoreUserFieldMap = <String, String>{
+  'key': 'key',
+  'uid': 'uid',
+  'email': 'email',
+  'place': 'place',
+};
+
+// ignore: unused_element
+abstract class _$StoreUserPerFieldToJson {
+  // ignore: unused_element
+  static Object? key(String instance) => instance;
+  // ignore: unused_element
+  static Object? uid(String instance) => instance;
+  // ignore: unused_element
+  static Object? email(String instance) => instance;
+  // ignore: unused_element
+  static Object? place(String instance) => instance;
+}
+
+Map<String, dynamic> _$StoreUserToJson(StoreUser instance) => <String, dynamic>{
+      'key': instance.key,
+      'uid': instance.uid,
+      'email': instance.email,
+      'place': instance.place,
+    };
+
 AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
       json['email'] as String,
+      json['name'] as String,
+      json['phone'] as String,
+      Converters.localTime(json['birthday'] as Timestamp),
       key: json['key'] as String,
       uid: json['uid'] as String,
     );
@@ -936,6 +1408,9 @@ const _$AppUserFieldMap = <String, String>{
   'key': 'key',
   'uid': 'uid',
   'email': 'email',
+  'name': 'name',
+  'phone': 'phone',
+  'birthday': 'birthday',
 };
 
 // ignore: unused_element
@@ -946,10 +1421,19 @@ abstract class _$AppUserPerFieldToJson {
   static Object? uid(String instance) => instance;
   // ignore: unused_element
   static Object? email(String instance) => instance;
+  // ignore: unused_element
+  static Object? name(String instance) => instance;
+  // ignore: unused_element
+  static Object? phone(String instance) => instance;
+  // ignore: unused_element
+  static Object? birthday(DateTime instance) => Converters.timestamp(instance);
 }
 
 Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'key': instance.key,
       'uid': instance.uid,
       'email': instance.email,
+      'name': instance.name,
+      'phone': instance.phone,
+      'birthday': Converters.timestamp(instance.birthday),
     };

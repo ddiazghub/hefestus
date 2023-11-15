@@ -12,9 +12,10 @@ class UserController extends StreamController<AppUserQuerySnapshot> {
 
   RxMap<String, AppUser> get users => _users;
 
-  Iterable<AppUser> get otherUsers => _users.values.where((user) => user.uid != auth.uid);
+  Iterable<AppUser> get otherUsers =>
+      _users.values.where((user) => user.uid != auth.uid);
 
-  AppUser? operator[](String key) => users[key];
+  AppUser? operator [](String key) => users[key];
 
   void onReceive(AppUserQuerySnapshot snapshot) {
     for (final doc in snapshot.docChanges) {
@@ -35,10 +36,9 @@ class UserController extends StreamController<AppUserQuerySnapshot> {
 
   @override
   Future<void> start() async {
-    if (!active) {
-      _users.clear();
-      subscription = UserRef.snapshots().listen(onReceive);
-    }
+    super.start();
+    _users.clear();
+    subscription = UserRef.snapshots().listen(onReceive);
   }
 
   Future<void> create(AppUser user) async {

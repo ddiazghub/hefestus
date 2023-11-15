@@ -63,10 +63,9 @@ class ChatController extends StreamController<MessageQuerySnapshot> {
 
   @override
   Future<void> start() async {
-    if (!active) {
-      messages.clear();
-      subscription = MessageRef.orderByCreatedAt().snapshots().listen(onReceive);
-    }
+    super.start();
+    messages.clear();
+    subscription = MessageRef.orderByCreatedAt().snapshots().listen(onReceive);
   }
 
   Future<void> updateMsg(String key, String text) async {

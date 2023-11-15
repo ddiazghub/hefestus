@@ -16,6 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'ui/my_app.dart';
 
+// Nice try, this API Key is IP restricted
 const apiKey = 'AIzaSyAYzFXFPyTWmQ5rHGlLcxorM-gf-KWLoLE';
 
 Future<void> main() async {

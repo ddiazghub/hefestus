@@ -6,6 +6,7 @@ import 'package:hefestus/ui/pages/content_page.dart';
 import 'package:hefestus/ui/pages/login/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hefestus/ui/pages/place_page.dart';
 
 class Central extends StatelessWidget {
   const Central({super.key});
@@ -22,7 +23,8 @@ class Central extends StatelessWidget {
             Get.find<MapController>().start();
           });
 
-          return ContentPage();
+          // return const ContentPage();
+          return const PlacePage();
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Get.find<UserController>().stop();
@@ -30,7 +32,7 @@ class Central extends StatelessWidget {
             Get.find<MapController>().stop();
           });
 
-          return LoginPage();
+          return const LoginPage();
         }
       },
     );

@@ -9,9 +9,7 @@ import '../widgets/chat_page.dart';
 import '../widgets/user_chat_page.dart';
 
 class ContentPage extends GetView<AuthController> {
-  ContentPage({super.key});
-
-  final tabs = TabController();
+  const ContentPage({super.key});
 
   static final List<Widget> _widgets = [
     const MapPage(),
@@ -29,8 +27,8 @@ class ContentPage extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
+    return ObxValue(
+      (tabs) {
         return Scaffold(
           appBar: AppBar(title: Text('Welcome ${controller.email}'), actions: [
             IconButton(
@@ -43,7 +41,7 @@ class ContentPage extends GetView<AuthController> {
               },
             ),
           ]),
-          body: _widgets[tabs.selected],
+          body: _widgets[tabs.value],
           bottomNavigationBar: CurvedNavigationBar(
             items: const [
               Tooltip(
@@ -76,20 +74,13 @@ class ContentPage extends GetView<AuthController> {
             color: Theme.of(context).colorScheme.primary,
             buttonBackgroundColor: const Color(0xFFF6A641),
             backgroundColor: Colors.transparent.withOpacity(0),
-            index: tabs.selected,
+            index: tabs.value,
             animationCurve: Curves.easeInOut,
             animationDuration: const Duration(milliseconds: 170),
-            onTap: (index) => tabs.selected = index,
+            onTap: (index) => tabs.value = index,
           ),
         );
-      }
+      }, 0.obs,
     );
   }
-}
-
-class TabController extends GetxController {
-  final _selected = 0.obs;
-
-  int get selected => _selected.value;
-  set selected(int value) => _selected.value = value;
 }
