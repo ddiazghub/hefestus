@@ -44,6 +44,8 @@ class MapController extends StreamController {
     }
   }
 
+  Future<String> getPhoto(String id) async => repo.getPhoto(id);
+
   @override
   Future<void> start() async {
     super.start();

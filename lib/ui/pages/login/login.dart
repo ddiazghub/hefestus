@@ -32,6 +32,24 @@ class LoginPage extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    final buttons = [
+      TextButton.icon(
+        onPressed: () => Get.to(SignUpPage()),
+        icon: const Icon(Icons.person_add),
+        label: const Text('Create user account'),
+      ),
+      size.width < 600
+          ? const SizedBox(height: 10)
+          : const SizedBox(width: 40.0),
+      TextButton.icon(
+        onPressed: () => Get.to(SignUpPage()),
+        icon: const Icon(Icons.hardware),
+        label: const Text('Create store account'),
+      ),
+    ];
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -63,7 +81,8 @@ class LoginPage extends GetView<AuthController> {
                       onPressed: () async {
                         if (form.valid) {
                           final String email = form.control('email').value;
-                          final String password = form.control('password').value;
+                          final String password =
+                              form.control('password').value;
 
                           await controller.login(email, password);
                         } else {
@@ -73,22 +92,12 @@ class LoginPage extends GetView<AuthController> {
                       child: const Text('Submit'),
                     ),
                     const SizedBox(height: 24.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () => Get.to(SignUpPage()),
-                          icon: const Icon(Icons.person_add),
-                          label: const Text('Create user account'),
-                        ),
-                        const SizedBox(width: 40.0),
-                        TextButton.icon(
-                          onPressed: () => Get.to(SignUpPage()),
-                          icon: const Icon(Icons.hardware),
-                          label: const Text('Create store account'),
-                        ),
-                      ],
-                    ),
+                    size.width < 600
+                        ? Column(children: buttons)
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: buttons,
+                          ),
                   ],
                 );
               },

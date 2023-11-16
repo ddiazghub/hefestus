@@ -4,32 +4,46 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'place.g.dart';
 
-
 @JsonSerializable(createToJson: false)
 class Place {
   const Place(
     this.id,
     this.displayName,
     this.formattedAddress,
-    this.businessStatus,
     this.googleMapsUri,
     this.location,
     this.types, {
     this.photos,
+    this.businessStatus,
+    this.nationalPhoneNumber,
+    this.currentOpeningHours,
+    this.rating,
+    this.userRatingCount,
+    this.websiteUri,
   });
 
   final String id;
   final String formattedAddress;
-  final String businessStatus;
   final String googleMapsUri;
   final Point location;
+  final BusinessStatus? businessStatus;
   final List<Photo>? photos;
   final List<String> types;
-  
+  final double? rating;
+  final int? userRatingCount;
+  final String? nationalPhoneNumber;
+  final OpeningHours? currentOpeningHours;
+
+  @JsonKey(fromJson: uriFromJson)
+  final Uri? websiteUri;
+
   @JsonKey(fromJson: nameFromJson)
   final String displayName;
 
-  static String nameFromJson(Map<String, dynamic> json) => json['text'].toString();
+  static Uri? uriFromJson(String? uri) => uri == null ? null : Uri.parse(uri);
+
+  static String nameFromJson(Map<String, dynamic> json) =>
+      json['text'].toString();
 
   factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
 }
@@ -40,7 +54,8 @@ class PlaceResponse {
 
   final List<Place> places;
 
-  factory PlaceResponse.fromJson(Map<String, dynamic> json) => _$PlaceResponseFromJson(json);
+  factory PlaceResponse.fromJson(Map<String, dynamic> json) =>
+      _$PlaceResponseFromJson(json);
 }
 
 class PlaceRequest {
@@ -69,6 +84,11 @@ class PlaceRequest {
     'location',
     'photos',
     'types',
+    'rating',
+    'userRatingCount',
+    'nationalPhoneNumber',
+    'currentOpeningHours',
+    'websiteUri',
   ];
 
   static String? _formattedFields;
@@ -92,4 +112,26 @@ class PlaceRequest {
       },
     };
   }
+}
+
+enum BusinessStatus {
+  @JsonValue('OPERATIONAL')
+  operational,
+
+  @JsonValue('CLOSED_TEMPORARILY')
+  closedTemporarily,
+
+  @JsonValue('CLOSED_PERMANENTLY')
+  closedPermanently;
+}
+
+@JsonSerializable(createToJson: false)
+class OpeningHours {
+  OpeningHours(this.openNow, this.weekdayDescriptions);
+
+  final bool openNow;
+  final List<String> weekdayDescriptions;
+
+  factory OpeningHours.fromJson(Map<String, dynamic> json) =>
+      _$OpeningHoursFromJson(json);
 }

@@ -17,14 +17,6 @@ class ContentPage extends GetView<AuthController> {
     const UserChatPage()
   ];
 
-  void _logout() async {
-    try {
-      await controller.logout();
-    } catch (e) {
-      logError(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ObxValue(
@@ -36,9 +28,7 @@ class ContentPage extends GetView<AuthController> {
                 Icons.exit_to_app,
                 size: 30,
               ),
-              onPressed: () {
-                _logout();
-              },
+              onPressed: () => controller.logout(),
             ),
           ]),
           body: _widgets[tabs.value],

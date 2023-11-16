@@ -8,4 +8,5 @@ class PlaceRepository {
   final BasePlaceDatasource source;
 
   Future<List<Place>> search(Point center) => source.search(center);
+  Future<String> getPhoto(String id) => source.getPhoto(id);
 }

@@ -23,8 +23,8 @@ class Central extends StatelessWidget {
             Get.find<MapController>().start();
           });
 
-          // return const ContentPage();
-          return const PlacePage();
+          return const ContentPage();
+          // return const PlacePage();
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Get.find<UserController>().stop();

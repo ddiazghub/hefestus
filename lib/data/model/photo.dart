@@ -1,26 +1,23 @@
+import 'package:get/get.dart';
+import 'package:hefestus/data/repository/place_repository.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'photo.g.dart';
 
 @JsonSerializable(createToJson: false)
 class Photo {
-  const Photo(this.name, this.widthPx, this.heightPx, this.authorAttributions);
+  Photo(this.name, this.widthPx, this.heightPx);
 
   final String name;
   final int widthPx;
   final int heightPx;
-  final List<AuthorAttribution> authorAttributions;
+  String? _url;
+
+  Future<String> get url async {
+    _url ??= await Get.find<PlaceRepository>().getPhoto(name);
+
+    return _url!;
+  }
 
   factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
-}
-
-@JsonSerializable(createToJson: false)
-class AuthorAttribution {
-  const AuthorAttribution(this.displayName, this.uri, this.photoUri);
-
-  final String displayName;
-  final String uri;
-  final String photoUri;
-
-  factory AuthorAttribution.fromJson(Map<String, dynamic> json) => _$AuthorAttributionFromJson(json);
 }

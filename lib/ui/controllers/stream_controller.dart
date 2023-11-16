@@ -20,9 +20,6 @@ abstract class StreamController<T> extends GetxController {
 abstract class MultiStreamController<T, E> extends StreamController<T> {
   StreamSubscription<E>? subscription2;
 
-  @mustCallSuper
-  Future<void> start() async => stop();
-
   @override
   void stop() {
     subscription?.cancel();

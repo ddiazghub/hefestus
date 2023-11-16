@@ -1,12 +1,17 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hefestus/data/model/place.dart';
+import 'package:hefestus/ui/widgets/place_hours.dart';
 import 'package:hefestus/ui/widgets/rating.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlaceView extends StatelessWidget {
-  const PlaceView({super.key});
+  const PlaceView({super.key, required this.place});
+
+  final Place place;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
 
     return Container(
@@ -18,7 +23,7 @@ class PlaceView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Mount Fuji', style: theme.textTheme.displayMedium),
+          Text(place.displayName, style: theme.textTheme.displayMedium),
           const SizedBox(height: 4),
           Row(children: [
             const Icon(
@@ -27,113 +32,92 @@ class PlaceView extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              'Honshu, Japan',
+              place.formattedAddress,
+              maxLines: 4,
+              overflow: TextOverflow.fade,
               style: theme.textTheme.bodySmall,
             )
           ]),
           const SizedBox(height: 8),
-          const Rating(rating: 4.5, color: Colors.black),
+          Row(
+            children: [
+              Rating(place: place, color: Colors.black),
+              const SizedBox(width: 32),
+              switch (place.businessStatus) {
+                null => Text(
+                    'Status unknown',
+                    style: TextStyle(color: theme.colorScheme.secondary),
+                  ),
+                BusinessStatus.operational => const Text(
+                    'Operational',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                BusinessStatus.closedTemporarily => const Text(
+                    'Closed temporarily',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                BusinessStatus.closedPermanently => const Text(
+                    'Closed permanently',
+                    style: TextStyle(color: Colors.red),
+                  ),
+              },
+            ],
+          ),
           const SizedBox(height: 18),
           Row(
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.remove,
-                  color: theme.colorScheme.secondary,
-                ),
-                splashColor: theme.colorScheme.secondary,
-                onPressed: () => print('Removing'),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: Text(
-                  '0',
-                  style: theme.textTheme.bodySmall,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => print('Adding'),
-              ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Icon(
-                Icons.timer_rounded,
+                Icons.phone,
                 color: theme.colorScheme.secondary,
               ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                '5 Days',
-                style: theme.textTheme.bodySmall!.merge(
-                  TextStyle(color: theme.colorScheme.secondary),
-                ),
-              ),
+              const SizedBox(width: 8),
+              Text(place.nationalPhoneNumber ?? 'Unknow phone number'),
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Description',
-            style: theme.textTheme.displaySmall!.merge(
-              const TextStyle(color: Colors.black),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Enjoy your winter vacation with warmth and amazing sightseeing on the mountains. Enjoy the best experience with us!',
-            maxLines: 4,
-            overflow: TextOverflow.fade,
-            style: theme.textTheme.bodyLarge,
-          ),
-          SizedBox(height: size.height * 0.02),
+          const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text: '\$400',
-                    style: TextStyle(
-                      color: theme.colorScheme.secondary,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text: '/Package',
-                    style: TextStyle(
-                      color: theme.colorScheme.secondary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ]),
+              const SizedBox(width: 16),
+              Icon(
+                Icons.language,
+                color: theme.colorScheme.secondary,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colorScheme.secondary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 0,
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'PlayFair',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Book Now',
-                    style: theme.textTheme.displaySmall,
-                  ),
-                ),
-              )
+              const SizedBox(width: 8),
+              place.websiteUri != null
+                  ? RichText(
+                      text: TextSpan(
+                      text: place.websiteUri.toString(),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => launchUrl(place.websiteUri!),
+                    ))
+                  : const Text('No website'),
             ],
+          ),
+          const SizedBox(height: 8),
+          PlaceHours(place: place),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.colorScheme.secondary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              elevation: 0,
+              textStyle: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'PlayFair',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Contact',
+                style: theme.textTheme.displaySmall,
+              ),
+            ),
           )
         ],
       ),

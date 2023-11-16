@@ -1,35 +1,39 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hefestus/data/model/place.dart';
+import 'package:hefestus/ui/controllers/auth_controller.dart';
 import 'package:hefestus/ui/widgets/image_viewer.dart';
 import 'package:hefestus/ui/widgets/place_view.dart';
 
-class PlacePage extends StatelessWidget {
-  const PlacePage({super.key});
+class PlacePage extends GetView<AuthController> {
+  const PlacePage({super.key, required this.place});
+
+  final Place place;
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        child: const Icon(Icons.menu),
-        onPressed: () {},
-      ),
+          appBar: AppBar(title: Text('Welcome ${controller.email}'), actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.exit_to_app,
+                size: 30,
+              ),
+              onPressed: () => controller.logout(),
+            ),
+          ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: ListView(
         shrinkWrap: true,
         children: [
           Container(
-            height: height * 0.4,
+            height: height * 0.5,
             color: Colors.grey,
-            child: ExtendedImage.asset(
-              'assets/image/pic1.jpg',
-              fit: BoxFit.cover,
-              loadStateChanged: imageLoadHandler,
-            ),
+            child: ImageViewer(place: place),
           ),
-          const PlaceView()
+          PlaceView(place: place)
         ],
       ),
     );

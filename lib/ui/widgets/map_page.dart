@@ -76,7 +76,7 @@ class MapPage extends GetView<MapController> {
                                     position: controller.location!.toLatLng(),
                                     infoWindow: InfoWindow(
                                       title: 'Your position',
-                                      onTap: () => Get.to(const PlacePage()),
+                                      onTap: () => print('Profile'),
                                     ),
                                   ),
                                   for (final place in controller.places)
@@ -87,7 +87,7 @@ class MapPage extends GetView<MapController> {
                                       infoWindow: InfoWindow(
                                         title: place.displayName,
                                         snippet: place.formattedAddress,
-                                        onTap: () => Get.to(const PlacePage()),
+                                        onTap: () => Get.to(PlacePage(place: place)),
                                       ),
                                     )
                                 },
@@ -96,14 +96,17 @@ class MapPage extends GetView<MapController> {
                             const SizedBox(height: 20),
                             Column(children: [
                               for (final place in controller.places)
-                                Container(
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    color: theme.colorScheme.primary,
-                                  ),
-                                  child: Center(
-                                    child: Text(place.displayName),
+                                InkWell(
+                                  onTap: () => Get.to(PlacePage(place: place)),
+                                  child: Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                    child: Center(
+                                      child: Text(place.displayName),
+                                    ),
                                   ),
                                 )
                             ]),
