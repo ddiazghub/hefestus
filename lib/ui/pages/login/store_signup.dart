@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/config.dart';
 import 'package:hefestus/data/model/user.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
-import 'package:hefestus/ui/widgets/image_picker.dart';
 import 'package:loggy/loggy.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 import 'package:reactive_date_time_picker/reactive_date_time_picker.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class StoreSignUpPage extends GetView<AuthController> {
-  const StoreSignUpPage({super.key});
+  StoreSignUpPage({super.key});
+
+  final selection = PlaceSelectionController();
 
   FormGroup buildForm() {
     return fb.group({
@@ -80,6 +83,37 @@ class StoreSignUpPage extends GetView<AuthController> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            OutlinedButton(
+                              child: Text('show dialog'.toUpperCase()),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text('Example'),
+                                      content: PlacesAutocomplete(
+                                        apiKey: apiKey,
+                                        searchHintText: 'Search for a place',
+                                        mounted: true,
+                                        hideBackButton: true,
+                                        onSuggestionSelected: (value) =>
+                                            selection.selected = value,
+                                        onGetDetailsByPlaceId: (value) {
+                                          print('Getting details');
+                                        },
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Done'),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                             ReactiveTextField<String>(
                               formControlName: 'name',
                               textInputAction: TextInputAction.next,
@@ -130,4 +164,12 @@ class StoreSignUpPage extends GetView<AuthController> {
       ),
     );
   }
+}
+
+class PlaceSelectionController extends GetxController {
+  final Rxn<Prediction> _selected = Rxn();
+
+  Prediction? get selected => _selected.value;
+
+  set selected(Prediction? value) => _selected.value = value;
 }

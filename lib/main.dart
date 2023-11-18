@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/config.dart';
 import 'package:hefestus/data/repository/place_repository.dart';
 import 'package:hefestus/data/sources/place_datasource.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
@@ -15,9 +16,6 @@ import 'package:hefestus/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'ui/my_app.dart';
-
-// Nice try, this API Key is IP restricted
-const apiKey = 'AIzaSyAYzFXFPyTWmQ5rHGlLcxorM-gf-KWLoLE';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

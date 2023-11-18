@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:hefestus/data/model/user.dart';
 import 'package:hefestus/data/usecase/avatar_usecase.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/controllers/image_pick_controller.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/image_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:loggy/loggy.dart';
 import 'package:reactive_date_time_picker/reactive_date_time_picker.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -51,7 +52,7 @@ class SignUpPage extends GetView<AuthController> {
   Widget build(BuildContext context) {
     const separator = SizedBox(height: 8);
 
-    return Scaffold(
+    return HefestusPage(
       body: ReactiveFormBuilder(
         form: buildForm,
         builder: (context, form, child) {
@@ -152,12 +153,4 @@ class SignUpPage extends GetView<AuthController> {
       ),
     );
   }
-}
-
-class ImagePickController extends GetxController {
-  final Rxn<XFile> _image = Rxn();
-
-  XFile? get image => _image.value;
-
-  set image(XFile? value) => _image.value = value;
 }

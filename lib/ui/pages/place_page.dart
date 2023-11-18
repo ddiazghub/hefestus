@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/place.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/image_viewer.dart';
 import 'package:hefestus/ui/widgets/place_view.dart';
 
@@ -14,17 +15,7 @@ class PlacePage extends GetView<AuthController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-          appBar: AppBar(title: Text('Welcome ${controller.email}'), actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.exit_to_app,
-                size: 30,
-              ),
-              onPressed: () => controller.logout(),
-            ),
-          ]),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+    return HefestusPage(
       body: ListView(
         shrinkWrap: true,
         children: [

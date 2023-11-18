@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hefestus/ui/pages/login/signup.dart';
+import 'package:hefestus/ui/controllers/image_pick_controller.dart';
 import 'package:hefestus/ui/widgets/snapshot_builder.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/ui/pages/login/signup.dart';
+import 'package:hefestus/ui/pages/login/store_signup.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -44,13 +46,13 @@ class LoginPage extends GetView<AuthController> {
           ? const SizedBox(height: 10)
           : const SizedBox(width: 40.0),
       TextButton.icon(
-        onPressed: () => Get.to(SignUpPage()),
+        onPressed: () => Get.to(StoreSignUpPage()),
         icon: const Icon(Icons.hardware),
         label: const Text('Create store account'),
       ),
     ];
 
-    return Scaffold(
+    return HefestusPage(
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
