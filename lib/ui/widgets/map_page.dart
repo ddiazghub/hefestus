@@ -8,35 +8,15 @@ import 'package:hefestus/ui/pages/place_page.dart';
 import 'package:hefestus/ui/widgets/snapshot_builder.dart';
 import 'package:hefestus/ui/widgets/spinner.dart';
 
-typedef MapIcons = ({BitmapDescriptor user, BitmapDescriptor hardware});
-
 class MapPage extends GetView<MapController> {
   const MapPage({super.key});
-
-  static const imageConfig = ImageConfiguration(size: Size(48, 48));
-  static MapIcons? icons;
-
-  static Future<MapIcons> getIcons() async {
-    icons ??= (
-      user: await BitmapDescriptor.fromAssetImage(
-        imageConfig,
-        Assets.user,
-      ),
-      hardware: await BitmapDescriptor.fromAssetImage(
-        imageConfig,
-        Assets.hardware,
-      ),
-    );
-
-    return icons!;
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return FutureBuilder(
-      future: getIcons(),
+      future: Assets.getIcons(),
       builder: (context, snapshot) {
         return SnapshotBuilder(
           snapshot: snapshot,

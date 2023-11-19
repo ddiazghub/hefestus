@@ -8,7 +8,7 @@ part of 'place.dart';
 
 Place _$PlaceFromJson(Map<String, dynamic> json) => Place(
       json['id'] as String,
-      Place.nameFromJson(json['displayName'] as Map<String, dynamic>),
+      nameFromJson(json['displayName'] as Map<String, dynamic>),
       json['formattedAddress'] as String,
       json['googleMapsUri'] as String,
       Point.fromJson(json['location'] as Map<String, dynamic>),
@@ -34,10 +34,26 @@ const _$BusinessStatusEnumMap = {
   BusinessStatus.closedPermanently: 'CLOSED_PERMANENTLY',
 };
 
-PlaceResponse _$PlaceResponseFromJson(Map<String, dynamic> json) =>
-    PlaceResponse(
+PlaceCompletion _$PlaceCompletionFromJson(Map<String, dynamic> json) =>
+    PlaceCompletion(
+      json['id'] as String,
+      PlaceCompletion.nameFromJson(json['displayName'] as Map<String, dynamic>),
+      json['formattedAddress'] as String,
+      Point.fromJson(json['location'] as Map<String, dynamic>),
+    );
+
+PlaceSearchResponse _$PlaceSearchResponseFromJson(Map<String, dynamic> json) =>
+    PlaceSearchResponse(
       places: (json['places'] as List<dynamic>)
           .map((e) => Place.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+PlaceCompletionResponse _$PlaceCompletionResponseFromJson(
+        Map<String, dynamic> json) =>
+    PlaceCompletionResponse(
+      places: (json['places'] as List<dynamic>)
+          .map((e) => PlaceCompletion.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

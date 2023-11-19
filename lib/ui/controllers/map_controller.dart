@@ -15,8 +15,7 @@ class MapController extends StreamController {
   double? get longitude => location?.longitude;
   List<Place> get places => _places;
 
-  static const settings = LocationSettings(
-      accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 10);
+  static const settings = LocationSettings(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 10);
 
   void onData(Position position) {
     _location.value = Point(position.latitude, position.longitude);
@@ -30,10 +29,9 @@ class MapController extends StreamController {
     return switch (await Geolocator.checkPermission()) {
       LocationPermission.deniedForever =>
         throw 'Location permissions are permanently denied, we cannot request permissions.',
-      LocationPermission.denied =>
-        await Geolocator.requestPermission() == LocationPermission.denied
-            ? throw 'Location permissions are denied'
-            : true,
+      LocationPermission.denied => await Geolocator.requestPermission() == LocationPermission.denied
+          ? throw 'Location permissions are denied'
+          : true,
       _ => true,
     };
   }
@@ -42,6 +40,10 @@ class MapController extends StreamController {
     if (places.isEmpty) {
       _places.value = await repo.search(center);
     }
+  }
+
+  Future<List<PlaceCompletion>> complete(String text) async {
+    return await repo.complete(text, location!);
   }
 
   Future<String> getPhoto(String id) async => repo.getPhoto(id);
