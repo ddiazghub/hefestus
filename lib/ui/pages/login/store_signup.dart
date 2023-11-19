@@ -23,7 +23,6 @@ class StoreSignUpPage extends StatefulWidget {
 }
 
 class StoreSignUpPageState extends State<StoreSignUpPage> {
-  final controller = TextEditingController();
   final PlacePickerController picker = PlacePickerController();
 
   FormGroup buildForm() {
@@ -65,13 +64,18 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                     form: buildForm,
                     builder: (context, form, child) {
                       Future<void> signup() async {
+                        if (picker.selected.value == null) {
+                          Get.snackbar('Error', 'Please select a hardware store');
+                          return;
+                        }
+
                         if (form.valid) {
                           final String email = form.control('email').value;
                           final String password = form.control('password').value;
 
                           final user = StoreAuthUser(
                             email,
-                            'None',
+                            picker.selected.value!.id,
                             password,
                           );
 
@@ -94,6 +98,20 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                 children: [
                                   Autocomplete<PlaceCompletion>(
                                     displayStringForOption: (place) => place.displayName,
+                                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                                      return TextField(
+                                        controller: textEditingController,
+                                        focusNode: focusNode,
+                                        onSubmitted: (text) => onFieldSubmitted(),
+                                        decoration: InputDecoration(
+                                          hintText: 'Select your store',
+                                          focusColor: theme.colorScheme.background,
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(color: theme.colorScheme.secondary),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     optionsBuilder: (value) async {
                                       try {
                                         final List<PlaceCompletion>? options = await completion(value.text);
@@ -130,8 +148,6 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                                       tileColor: highlight ? Theme.of(context).focusColor : null,
                                                       onTap: () {
                                                         onSelected(place);
-                                                        print('Tapped item: ${place.displayName}');
-                                                        controller.text = place.displayName;
                                                         picker.selected.value = place;
                                                         googleMapController?.moveCamera(
                                                           CameraUpdate.newLatLngZoom(
@@ -191,41 +207,6 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                             );
                                     }),
                                   ),
-                                  // AsyncAutocomplete<PlaceCompletion>(
-                                  //   decoration: InputDecoration(
-                                  //     hintText: 'Select your store',
-                                  //     border: OutlineInputBorder(
-                                  //       borderSide: BorderSide(color: theme.colorScheme.secondary),
-                                  //     ),
-                                  //   ),
-                                  //   controller: controller,
-                                  //   maxListHeight: 500,
-                                  //   asyncSuggestions: (text) async {
-                                  //     if (text.isEmpty) {
-                                  //       return [];
-                                  //     } else {
-                                  //       return map.complete(text);
-                                  //     }
-                                  //   },
-                                  //   suggestionBuilder: (place) {
-                                  //     return ListTile(
-                                  //       onTap: () {
-                                  //         print('Tapped item: ${place.displayName}');
-                                  //         controller.text = place.displayName;
-                                  //         picker.selected.value = place;
-                                  //         googleMapController?.moveCamera(
-                                  //           CameraUpdate.newLatLngZoom(
-                                  //             place.location.toLatLng(),
-                                  //             14.4746,
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //       leading: const Icon(Icons.location_pin),
-                                  //       title: Text(place.displayName),
-                                  //       subtitle: Text(place.formattedAddress),
-                                  //     );
-                                  //   },
-                                  // ),
                                 ],
                               ),
                             ),

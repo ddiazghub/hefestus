@@ -81,11 +81,14 @@ class MapPage extends GetView<MapController> {
                                   child: Container(
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
+                                      border: Border.all(color: theme.colorScheme.onPrimary),
                                       color: theme.colorScheme.primary,
                                     ),
                                     child: Center(
-                                      child: Text(place.displayName),
+                                      child: Text(
+                                        place.displayName,
+                                        style: TextStyle(color: theme.colorScheme.onPrimary),
+                                      ),
                                     ),
                                   ),
                                 )

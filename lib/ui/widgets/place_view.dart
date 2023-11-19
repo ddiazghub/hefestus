@@ -87,10 +87,15 @@ class PlaceView extends StatelessWidget {
               place.websiteUri != null
                   ? RichText(
                       text: TextSpan(
-                      text: place.websiteUri.toString(),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => launchUrl(place.websiteUri!),
-                    ))
+                        text: place.websiteUri.toString(),
+                        recognizer: TapGestureRecognizer()..onTap = () => launchUrl(place.websiteUri!),
+                        style: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationStyle: TextDecorationStyle.solid,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    )
                   : const Text('No website'),
             ],
           ),
