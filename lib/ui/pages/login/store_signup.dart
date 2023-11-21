@@ -13,6 +13,7 @@ import 'package:hefestus/ui/controllers/place_picker_controller.dart';
 import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/snapshot_builder.dart';
 import 'package:hefestus/ui/widgets/spinner.dart';
+import 'package:hefestus/ui/widgets/submit_button.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -67,29 +68,31 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                       builder: (context, form, child) {
                         Future<void> signup() async {
                           if (picker.selected.value == null) {
-                            Get.snackbar('Error', 'Please select a hardware store');
+                            Get.snackbar(
+                                'Error', 'Please select a hardware store');
                             return;
                           }
-      
+
                           if (form.valid) {
                             final String email = form.control('email').value;
-                            final String password = form.control('password').value;
-      
+                            final String password =
+                                form.control('password').value;
+
                             final store = StoreAuthUser(
                               email,
                               picker.selected.value!.id,
                               password,
                             );
-      
+
                             await auth.signup(store, false);
                             Get.back();
                           } else {
                             form.markAllAsTouched();
                           }
                         }
-      
+
                         final theme = Theme.of(context);
-      
+
                         return Row(
                           children: [
                             Expanded(
@@ -99,68 +102,100 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Autocomplete<PlaceCompletion>(
-                                      displayStringForOption: (place) => place.displayName,
-                                      fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                                      displayStringForOption: (place) =>
+                                          place.displayName,
+                                      fieldViewBuilder: (context,
+                                          textEditingController,
+                                          focusNode,
+                                          onFieldSubmitted) {
                                         return TextField(
                                           controller: textEditingController,
                                           focusNode: focusNode,
-                                          onSubmitted: (text) => onFieldSubmitted(),
+                                          onSubmitted: (text) =>
+                                              onFieldSubmitted(),
                                           decoration: InputDecoration(
                                             hintText: 'Select your store',
-                                            focusColor: theme.colorScheme.background,
+                                            focusColor:
+                                                theme.colorScheme.background,
                                             border: OutlineInputBorder(
-                                              borderSide: BorderSide(color: theme.colorScheme.secondary),
+                                              borderSide: BorderSide(
+                                                  color: theme
+                                                      .colorScheme.secondary),
                                             ),
                                           ),
                                         );
                                       },
                                       optionsBuilder: (value) async {
                                         try {
-                                          final List<PlaceCompletion>? options = await completion(value.text);
+                                          final List<PlaceCompletion>? options =
+                                              await completion(value.text);
                                           if (options == null) {
                                             return [];
                                           }
-      
+
                                           return options;
                                         } catch (err) {
                                           return [];
                                         }
                                       },
-                                      optionsViewBuilder: (context, onSelected, options) {
+                                      optionsViewBuilder:
+                                          (context, onSelected, options) {
                                         return Align(
                                           alignment: Alignment.topLeft,
                                           child: Material(
                                             elevation: 4.0,
                                             child: ConstrainedBox(
-                                              constraints: const BoxConstraints(maxHeight: 500),
+                                              constraints: const BoxConstraints(
+                                                  maxHeight: 500),
                                               child: ListView(
                                                 shrinkWrap: true,
                                                 children: [
-                                                  for (final (index, place) in options.indexed)
-                                                    Builder(builder: (BuildContext context) {
+                                                  for (final (index, place)
+                                                      in options.indexed)
+                                                    Builder(builder:
+                                                        (BuildContext context) {
                                                       final bool highlight =
-                                                          AutocompleteHighlightedOption.of(context) == index;
+                                                          AutocompleteHighlightedOption
+                                                                  .of(context) ==
+                                                              index;
                                                       if (highlight) {
-                                                        SchedulerBinding.instance
-                                                            .addPostFrameCallback((Duration timeStamp) {
-                                                          Scrollable.ensureVisible(context, alignment: 0.5);
+                                                        SchedulerBinding
+                                                            .instance
+                                                            .addPostFrameCallback(
+                                                                (Duration
+                                                                    timeStamp) {
+                                                          Scrollable
+                                                              .ensureVisible(
+                                                                  context,
+                                                                  alignment:
+                                                                      0.5);
                                                         });
                                                       }
                                                       return ListTile(
-                                                        tileColor: highlight ? Theme.of(context).focusColor : null,
+                                                        tileColor: highlight
+                                                            ? Theme.of(context)
+                                                                .focusColor
+                                                            : null,
                                                         onTap: () {
                                                           onSelected(place);
-                                                          picker.selected.value = place;
-                                                          googleMapController?.moveCamera(
-                                                            CameraUpdate.newLatLngZoom(
-                                                              place.location.toLatLng(),
+                                                          picker.selected
+                                                              .value = place;
+                                                          googleMapController
+                                                              ?.moveCamera(
+                                                            CameraUpdate
+                                                                .newLatLngZoom(
+                                                              place.location
+                                                                  .toLatLng(),
                                                               14.4746,
                                                             ),
                                                           );
                                                         },
-                                                        leading: const Icon(Icons.location_pin),
-                                                        title: Text(place.displayName),
-                                                        subtitle: Text(place.formattedAddress),
+                                                        leading: const Icon(
+                                                            Icons.location_pin),
+                                                        title: Text(
+                                                            place.displayName),
+                                                        subtitle: Text(place
+                                                            .formattedAddress),
                                                       );
                                                     }),
                                                 ],
@@ -184,8 +219,11 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                                   rotateGesturesEnabled: false,
                                                   scrollGesturesEnabled: false,
                                                   mapType: MapType.normal,
-                                                  onMapCreated: (controller) => googleMapController = controller,
-                                                  initialCameraPosition: CameraPosition(
+                                                  onMapCreated: (controller) =>
+                                                      googleMapController =
+                                                          controller,
+                                                  initialCameraPosition:
+                                                      CameraPosition(
                                                     target: LatLng(
                                                       map.latitude!,
                                                       map.longitude!,
@@ -194,14 +232,27 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                                                   ),
                                                   myLocationEnabled: true,
                                                   markers: {
-                                                    if (picker.selected.value != null)
+                                                    if (picker.selected.value !=
+                                                        null)
                                                       Marker(
-                                                        markerId: const MarkerId('My Position'),
+                                                        markerId:
+                                                            const MarkerId(
+                                                                'My Position'),
                                                         icon: icons.hardware,
-                                                        position: picker.selected.value!.location.toLatLng(),
+                                                        position: picker
+                                                            .selected
+                                                            .value!
+                                                            .location
+                                                            .toLatLng(),
                                                         infoWindow: InfoWindow(
-                                                          title: picker.selected.value!.displayName,
-                                                          snippet: picker.selected.value!.formattedAddress,
+                                                          title: picker
+                                                              .selected
+                                                              .value!
+                                                              .displayName,
+                                                          snippet: picker
+                                                              .selected
+                                                              .value!
+                                                              .formattedAddress,
                                                         ),
                                                       ),
                                                   },
@@ -216,31 +267,34 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
                             Expanded(
                               child: Center(
                                 child: ConstrainedBox(
-                                  constraints: const BoxConstraints(maxWidth: 500),
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 500),
                                   child: Container(
                                     padding: const EdgeInsets.all(20),
                                     child: SingleChildScrollView(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
+                                          Image.asset(Assets.logo),
                                           ReactiveTextField<String>(
                                             formControlName: 'email',
-                                            textInputAction: TextInputAction.next,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             decoration: decoration('email'),
                                           ),
                                           separator,
                                           ReactiveTextField<String>(
                                             formControlName: 'password',
                                             obscureText: true,
-                                            textInputAction: TextInputAction.next,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             decoration: decoration('Password'),
                                           ),
                                           separator,
-                                          ElevatedButton(
-                                            onPressed: signup,
-                                            child: const Text('Submit'),
-                                          ),
+                                          SubmitButton(onPressed: signup),
                                         ],
                                       ),
                                     ),
@@ -265,7 +319,8 @@ typedef _Debounceable<S, T> = Future<S?> Function(T parameter);
 ///
 /// This means that the original function will be called only after no calls
 /// have been made for the given Duration.
-_Debounceable<S, T> _debounce<S, T>(_Debounceable<S?, T> function, Duration duration) {
+_Debounceable<S, T> _debounce<S, T>(
+    _Debounceable<S?, T> function, Duration duration) {
   _DebounceTimer? debounceTimer;
 
   return (T parameter) async {

@@ -13,7 +13,7 @@ class AuthController extends GetxController {
 
   User? get user => FirebaseAuth.instance.currentUser;
   String? get email => user?.email;
-  String? get uid => user?.uid;
+  String? get id => isUser ? user?.uid : storeData?.place.id;
   bool get isUser => _isUser.value;
   AppUser? get userData => _userData;
   StoreUserData? get storeData => _storeData;
@@ -23,8 +23,8 @@ class AuthController extends GetxController {
     final userController = Get.find<UserController>();
 
     _userData = userController.users[user!.uid];
-    final StoreUser? partialStoreData =
-        userController.stores[user.uid];
+    final snapshot = await StoreRef.whereUid(isEqualTo: user.uid).snapshots().first;
+    final StoreUser? partialStoreData = snapshot.docs.firstOrNull?.data;
 
     if (_userData != null) {
       _isUser.value = true;

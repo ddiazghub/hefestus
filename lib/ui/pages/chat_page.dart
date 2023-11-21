@@ -8,32 +8,30 @@ import '../controllers/auth_controller.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatPage extends GetView<UserController> {
-  const ChatPage({super.key, this.receiver});
+  const ChatPage({super.key, required this.user, required this.store});
 
-  final String? receiver;
+  final String user;
+  final String store;
 
   @override
   Widget build(BuildContext context) {
-    final isUser = Get.find<AuthController>().isUser;
-
     return HefestusPage(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 25.0),
-        child: Column(
-          children: [
-          ChatList(receiver: receiver),
-          ChatInput(receiver: receiver),
-  ]
-        ),
+        child: Column(children: [
+          ChatList(user: user, store: store),
+          ChatInput(user: user, store: store),
+        ]),
       ),
     );
   }
 }
 
 class ChatList extends StatefulWidget {
-  const ChatList({super.key, this.receiver});
+  const ChatList({super.key, required this.user, required this.store});
 
-  final String? receiver;
+  final String user;
+  final String store;
 
   @override
   State<StatefulWidget> createState() => ChatListState();
@@ -65,14 +63,11 @@ class ChatListState extends State<ChatList> {
 
   @override
   Widget build(BuildContext context) {
-    String uid = Get.find<AuthController>().uid!;
+    String uid = Get.find<AuthController>().id!;
+
     return Obx(() {
       WidgetsBinding.instance.addPostFrameCallback(scrollToEnd);
-
-      print(widget.receiver);
-      final messages = widget.receiver == null
-          ? chat.global
-          : chat.where(uid, widget.receiver!);
+      final messages = chat.where(widget.user, widget.store);
 
       return Expanded(
         flex: 4,
@@ -104,9 +99,10 @@ class ChatListState extends State<ChatList> {
 }
 
 class ChatInput extends GetView<ChatController> {
-  const ChatInput({super.key, this.receiver});
+  const ChatInput({super.key, required this.user, required this.store});
 
-  final String? receiver;
+  final String user;
+  final String store;
 
   static FormGroup form() => fb.group({
         'input': ['']
@@ -114,6 +110,8 @@ class ChatInput extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isUser = Get.find<AuthController>().isUser;
+
     return ReactiveFormBuilder(
       form: form,
       builder: (context, form, child) {
@@ -121,7 +119,12 @@ class ChatInput extends GetView<ChatController> {
           final String? value = form.control('input').value;
 
           if (value != null && value.isNotEmpty) {
-            controller.send(value, receiver: receiver);
+            if (isUser) {
+              controller.send(value, user, store);
+            } else {
+              controller.send(value, store, user);
+            }
+
             form.control('input').value = '';
           }
         }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/assets.dart';
 import 'package:hefestus/data/model/user.dart';
 import 'package:hefestus/data/usecase/avatar_usecase.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
 import 'package:hefestus/ui/controllers/image_pick_controller.dart';
 import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/image_picker.dart';
+import 'package:hefestus/ui/widgets/submit_button.dart';
 import 'package:loggy/loggy.dart';
 import 'package:reactive_date_time_picker/reactive_date_time_picker.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -97,6 +99,7 @@ class SignUpPage extends GetView<AuthController> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Image.asset(Assets.logo),
                             ReactiveTextField<String>(
                               key: keys.name,
                               formControlName: 'name',
@@ -135,11 +138,7 @@ class SignUpPage extends GetView<AuthController> {
                               decoration: decoration('phone'),
                             ),
                             separator,
-                            ElevatedButton(
-                              key: keys.submit,
-                              onPressed: signup,
-                              child: const Text('Submit'),
-                            ),
+                            SubmitButton(onPressed: signup),
                           ],
                         ),
                       ),

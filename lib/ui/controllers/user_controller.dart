@@ -16,28 +16,25 @@ class UserController extends MultiStreamController<AppUserQuerySnapshot,
   RxMap<String, AppUser> get users => _users;
   RxMap<String, StoreUser> get stores => _stores;
 
-  Iterable<AppUser> get otherUsers =>
-      _users.values.where((user) => user.uid != auth.uid);
-
   AppUser? operator [](String key) => users[key];
 
   void Function(Snapshot) onReceive<
       Model extends BaseUser,
       DocSnapshot extends FirestoreDocumentSnapshot<Model>,
-      Snapshot extends FirestoreQuerySnapshot<Model, DocSnapshot>>(Map<String, Model> map) {
+      Snapshot extends FirestoreQuerySnapshot<Model, DocSnapshot>>(Map<String, Model> map, String Function(Model) key) {
     return (Snapshot snapshot) {
       for (final doc in snapshot.docChanges) {
         final data = doc.doc.data!;
 
         switch (doc.type) {
           case DocumentChangeType.added:
-            map[data.uid] = data;
+            map[key(data)] = data;
             break;
           case DocumentChangeType.modified:
-            map[data.uid] = data;
+            map[key(data)] = data;
             break;
           case DocumentChangeType.removed:
-            map.remove(data.uid);
+            map.remove(key(data));
         }
       }
     };
@@ -48,8 +45,8 @@ class UserController extends MultiStreamController<AppUserQuerySnapshot,
     super.start();
     _users.clear();
     _stores.clear();
-    subscription = UserRef.snapshots().listen(onReceive(users));
-    subscription2 = StoreRef.snapshots().listen(onReceive(stores));
+    subscription = UserRef.snapshots().listen(onReceive(users, (user) => user.uid));
+    subscription2 = StoreRef.snapshots().listen(onReceive(stores, (store) => store.place));
   }
 
   Future<void> create(BaseUser user, bool isUser) async {

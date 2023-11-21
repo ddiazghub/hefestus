@@ -2,12 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/place.dart';
-import 'package:hefestus/ui/pages/chat_page.dart';
+import 'package:hefestus/ui/controllers/auth_controller.dart';
 import 'package:hefestus/ui/widgets/place_hours.dart';
 import 'package:hefestus/ui/widgets/rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PlaceView extends StatelessWidget {
+class PlaceView extends GetView<AuthController> {
   const PlaceView({super.key, required this.place});
 
   final Place place;
@@ -66,6 +66,8 @@ class PlaceView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
+          PlaceHours(place: place),
+          const SizedBox(height: 8),
           Row(
             children: [
               const SizedBox(width: 16),
@@ -90,7 +92,8 @@ class PlaceView extends StatelessWidget {
                   ? RichText(
                       text: TextSpan(
                         text: place.websiteUri.toString(),
-                        recognizer: TapGestureRecognizer()..onTap = () => launchUrl(place.websiteUri!),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launchUrl(place.websiteUri!),
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
                           decorationStyle: TextDecorationStyle.solid,
@@ -101,31 +104,6 @@ class PlaceView extends StatelessWidget {
                   : const Text('No website'),
             ],
           ),
-          const SizedBox(height: 8),
-          PlaceHours(place: place),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.secondary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              elevation: 0,
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontFamily: 'PlayFair',
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: () => Get.to(const ChatPage()),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Contact',
-                style: theme.textTheme.displaySmall,
-              ),
-            ),
-          )
         ],
       ),
     );

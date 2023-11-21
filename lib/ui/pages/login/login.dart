@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hefestus/assets.dart';
 import 'package:hefestus/ui/pages/login/signup.dart';
 import 'package:hefestus/ui/pages/login/store_signup.dart';
 import 'package:hefestus/ui/widgets/hefestus_page.dart';
+import 'package:hefestus/ui/widgets/submit_button.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -61,26 +63,27 @@ class LoginPage extends GetView<AuthController> {
             child: ReactiveFormBuilder(
               form: buildForm,
               builder: (context, form, child) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ReactiveTextField<String>(
-                      formControlName: 'email',
-                      textInputAction: TextInputAction.next,
-                      decoration: decoration('email'),
-                    ),
-                    const SizedBox(height: 16.0),
-                    ReactiveTextField<String>(
-                      formControlName: 'password',
-                      obscureText: true,
-                      textInputAction: TextInputAction.done,
-                      decoration: decoration('Password'),
-                    ),
-                    const SizedBox(height: 16.0),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () async {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(Assets.logo),
+                      ReactiveTextField<String>(
+                        formControlName: 'email',
+                        textInputAction: TextInputAction.next,
+                        decoration: decoration('email'),
+                      ),
+                      const SizedBox(height: 16.0),
+                      ReactiveTextField<String>(
+                        formControlName: 'password',
+                        obscureText: true,
+                        textInputAction: TextInputAction.done,
+                        decoration: decoration('Password'),
+                      ),
+                      const SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
+                      SubmitButton(onPressed: () async {
                         if (form.valid) {
                           final String email = form.control('email').value;
                           final String password =
@@ -90,17 +93,16 @@ class LoginPage extends GetView<AuthController> {
                         } else {
                           form.markAllAsTouched();
                         }
-                      },
-                      child: const Text('Submit'),
-                    ),
-                    const SizedBox(height: 24.0),
-                    size.width < 600
-                        ? Column(children: buttons)
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: buttons,
-                          ),
-                  ],
+                      }),
+                      const SizedBox(height: 24.0),
+                      size.width < 600
+                          ? Column(children: buttons)
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: buttons,
+                            ),
+                    ],
+                  ),
                 );
               },
             ),

@@ -77,9 +77,8 @@ class ChatController extends StreamController<MessageQuerySnapshot> {
     }
   }
 
-  Future<void> send(String text, {String? receiver}) async {
-    final uid = Get.find<AuthController>().uid!;
-    final message = Message(text, uid, receiver: receiver);
+  Future<void> send(String text, String sender, String receiver) async {
+    final message = Message(text, sender, receiver: receiver);
 
     try {
       await MessageRef.add(message);

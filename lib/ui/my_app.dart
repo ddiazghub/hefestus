@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Hefestus',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         home: const Central(),
       ),
     );
