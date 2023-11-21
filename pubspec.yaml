@@ -53,6 +53,7 @@ dependencies:
   reactive_date_time_picker: ^3.0.0
   extended_image: ^8.1.1
   firebase_storage: ^11.5.1
+  mockito: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,9 @@ dev_dependencies:
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
   cloud_firestore_odm_generator: ^1.0.0-dev.58
+  bdd_widget_test: ^1.2.1
+  flutter_driver:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

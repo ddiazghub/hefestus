@@ -63,7 +63,8 @@ class LoginPage extends GetView<AuthController> {
                       onPressed: () async {
                         if (form.valid) {
                           final String email = form.control('email').value;
-                          final String password = form.control('password').value;
+                          final String password =
+                              form.control('password').value;
 
                           await controller.login(email, password);
                         } else {
@@ -77,12 +78,14 @@ class LoginPage extends GetView<AuthController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton.icon(
+                          key: const Key('SUA'),
                           onPressed: () => Get.to(SignUpPage()),
                           icon: const Icon(Icons.person_add),
                           label: const Text('Create user account'),
                         ),
                         const SizedBox(width: 40.0),
                         TextButton.icon(
+                          key: const Key('SSA'),
                           onPressed: () => Get.to(SignUpPage()),
                           icon: const Icon(Icons.hardware),
                           label: const Text('Create store account'),
