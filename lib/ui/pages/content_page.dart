@@ -25,17 +25,17 @@ class ContentPage extends GetView<AuthController> {
           bottomNavigationBar: CurvedNavigationBar(
             items: const [
               Tooltip(
-                message: 'Home',
+                message: 'Maps',
                 child: Icon(
-                  Icons.home,
+                  Icons.map,
                   size: 35,
                   color: Colors.white,
                 ),
               ),
               Tooltip(
-                message: 'Global Chat',
+                message: 'User',
                 child: Icon(
-                  Icons.chat,
+                  Icons.cabin,
                   size: 35,
                   color: Colors.white,
                 ),
