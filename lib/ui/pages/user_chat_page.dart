@@ -1,7 +1,8 @@
 import 'package:hefestus/ui/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hefestus/ui/widgets/chat_page.dart';
+import 'package:hefestus/ui/pages/chat_page.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 
 import '../../data/model/user.dart';
 
@@ -10,21 +11,12 @@ class UserChatPage extends GetView<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    return ObxValue(
-      (rx) {
-        return rx.value == null
-            ? UserList(rx: rx)
-            : ChatPage(receiver: rx.value);
-      },
-      Rxn<String>(),
-    );
+    return const HefestusPage(body: UserList());
   }
 }
 
 class UserList extends GetView<UserController> {
-  const UserList({super.key, required this.rx});
-
-  final Rxn<String> rx;
+  const UserList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +28,13 @@ class UserList extends GetView<UserController> {
             element.email,
           ),
           subtitle: Text(element.uid),
-          onTap: () => rx.value = element.uid,
+          onTap: () => Get.to(ChatPage(receiver: element.uid)),
         ),
       );
     }
 
     return Obx(() {
-      final users = controller.otherUsers.toList();
+      final users = controller.users.values.toList();
 
       if (users.isEmpty) {
         return const Center(

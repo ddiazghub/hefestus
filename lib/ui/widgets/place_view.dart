@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hefestus/data/model/place.dart';
+import 'package:hefestus/ui/pages/chat_page.dart';
 import 'package:hefestus/ui/widgets/place_hours.dart';
 import 'package:hefestus/ui/widgets/rating.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -115,7 +117,7 @@ class PlaceView extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {},
+            onPressed: () => Get.to(const ChatPage()),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(

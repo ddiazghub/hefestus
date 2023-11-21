@@ -7,7 +7,9 @@ part of 'user.dart';
 // **************************************************************************
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, require_trailing_commas, prefer_single_quotes, prefer_double_quotes, use_super_parameters
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, require_trailing_commas, prefer_single_quotes, prefer_double_quotes, use_super_parameters, duplicate_ignore
+// ignore_for_file: type=lint
+// ignore_for_file: invalid_use_of_internal_member
 
 class _Sentinel {
   const _Sentinel();
@@ -228,19 +230,29 @@ class _$AppUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
-      if (name != _sentinel) _$AppUserFieldMap['name']!: name as String,
+      if (name != _sentinel)
+        _$AppUserFieldMap['name']!:
+            _$AppUserPerFieldToJson.name(name as String),
       if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
-      if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
+      if (phone != _sentinel)
+        _$AppUserFieldMap['phone']!:
+            _$AppUserPerFieldToJson.phone(phone as String),
       if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
-      if (image != _sentinel) _$AppUserFieldMap['image']!: image as String,
+      if (image != _sentinel)
+        _$AppUserFieldMap['image']!:
+            _$AppUserPerFieldToJson.image(image as String),
       if (imageFieldValue != null) _$AppUserFieldMap['image']!: imageFieldValue,
       if (birthday != _sentinel)
-        _$AppUserFieldMap['birthday']!: birthday as DateTime,
+        _$AppUserFieldMap['birthday']!:
+            _$AppUserPerFieldToJson.birthday(birthday as DateTime),
       if (birthdayFieldValue != null)
         _$AppUserFieldMap['birthday']!: birthdayFieldValue,
-      if (uid != _sentinel) _$AppUserFieldMap['uid']!: uid as String,
+      if (uid != _sentinel)
+        _$AppUserFieldMap['uid']!: _$AppUserPerFieldToJson.uid(uid as String),
       if (uidFieldValue != null) _$AppUserFieldMap['uid']!: uidFieldValue,
-      if (email != _sentinel) _$AppUserFieldMap['email']!: email as String,
+      if (email != _sentinel)
+        _$AppUserFieldMap['email']!:
+            _$AppUserPerFieldToJson.email(email as String),
       if (emailFieldValue != null) _$AppUserFieldMap['email']!: emailFieldValue,
     };
 
@@ -287,19 +299,29 @@ class _$AppUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
-      if (name != _sentinel) _$AppUserFieldMap['name']!: name as String,
+      if (name != _sentinel)
+        _$AppUserFieldMap['name']!:
+            _$AppUserPerFieldToJson.name(name as String),
       if (nameFieldValue != null) _$AppUserFieldMap['name']!: nameFieldValue,
-      if (phone != _sentinel) _$AppUserFieldMap['phone']!: phone as String,
+      if (phone != _sentinel)
+        _$AppUserFieldMap['phone']!:
+            _$AppUserPerFieldToJson.phone(phone as String),
       if (phoneFieldValue != null) _$AppUserFieldMap['phone']!: phoneFieldValue,
-      if (image != _sentinel) _$AppUserFieldMap['image']!: image as String,
+      if (image != _sentinel)
+        _$AppUserFieldMap['image']!:
+            _$AppUserPerFieldToJson.image(image as String),
       if (imageFieldValue != null) _$AppUserFieldMap['image']!: imageFieldValue,
       if (birthday != _sentinel)
-        _$AppUserFieldMap['birthday']!: birthday as DateTime,
+        _$AppUserFieldMap['birthday']!:
+            _$AppUserPerFieldToJson.birthday(birthday as DateTime),
       if (birthdayFieldValue != null)
         _$AppUserFieldMap['birthday']!: birthdayFieldValue,
-      if (uid != _sentinel) _$AppUserFieldMap['uid']!: uid as String,
+      if (uid != _sentinel)
+        _$AppUserFieldMap['uid']!: _$AppUserPerFieldToJson.uid(uid as String),
       if (uidFieldValue != null) _$AppUserFieldMap['uid']!: uidFieldValue,
-      if (email != _sentinel) _$AppUserFieldMap['email']!: email as String,
+      if (email != _sentinel)
+        _$AppUserFieldMap['email']!:
+            _$AppUserPerFieldToJson.email(email as String),
       if (emailFieldValue != null) _$AppUserFieldMap['email']!: emailFieldValue,
     };
 
@@ -669,13 +691,13 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
 
   AppUserQuery whereFieldPath(
     FieldPath fieldPath, {
-    Object? isEqualTo,
-    Object? isNotEqualTo,
-    Object? isLessThan,
-    Object? isLessThanOrEqualTo,
-    Object? isGreaterThan,
-    Object? isGreaterThanOrEqualTo,
-    Object? arrayContains,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
+    Object? arrayContains = notSetQueryParam,
     List<Object?>? arrayContainsAny,
     List<Object?>? whereIn,
     List<Object?>? whereNotIn,
@@ -702,12 +724,12 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
   }
 
   AppUserQuery whereDocumentId({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -731,12 +753,12 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
   }
 
   AppUserQuery whereName({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -745,27 +767,39 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['name']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.name(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.name(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.name(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   AppUserQuery wherePhone({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -774,27 +808,39 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['phone']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.phone(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.phone(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.phone(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   AppUserQuery whereImage({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -803,27 +849,39 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['image']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.image(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.image(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.image(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   AppUserQuery whereBirthday({
-    DateTime? isEqualTo,
-    DateTime? isNotEqualTo,
-    DateTime? isLessThan,
-    DateTime? isLessThanOrEqualTo,
-    DateTime? isGreaterThan,
-    DateTime? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<DateTime>? whereIn,
     List<DateTime>? whereNotIn,
@@ -832,27 +890,40 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['birthday']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.birthday(isEqualTo as DateTime)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.birthday(isNotEqualTo as DateTime)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.birthday(isLessThan as DateTime)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.birthday(isLessThanOrEqualTo as DateTime)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.birthday(isGreaterThan as DateTime)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson
+                .birthday(isGreaterThanOrEqualTo as DateTime)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.birthday(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.birthday(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   AppUserQuery whereUid({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -861,27 +932,39 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['uid']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.uid(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.uid(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.uid(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   AppUserQuery whereEmail({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -890,15 +973,27 @@ class _$AppUserQuery extends QueryReference<AppUser, AppUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$AppUserFieldMap['email']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$AppUserPerFieldToJson.email(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$AppUserPerFieldToJson.email(e)),
+        whereNotIn: whereNotIn?.map((e) => _$AppUserPerFieldToJson.email(e)),
       ),
       $queryCursor: $queryCursor,
     );
@@ -1685,12 +1780,18 @@ class _$StoreUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
-      if (place != _sentinel) _$StoreUserFieldMap['place']!: place as String,
+      if (place != _sentinel)
+        _$StoreUserFieldMap['place']!:
+            _$StoreUserPerFieldToJson.place(place as String),
       if (placeFieldValue != null)
         _$StoreUserFieldMap['place']!: placeFieldValue,
-      if (uid != _sentinel) _$StoreUserFieldMap['uid']!: uid as String,
+      if (uid != _sentinel)
+        _$StoreUserFieldMap['uid']!:
+            _$StoreUserPerFieldToJson.uid(uid as String),
       if (uidFieldValue != null) _$StoreUserFieldMap['uid']!: uidFieldValue,
-      if (email != _sentinel) _$StoreUserFieldMap['email']!: email as String,
+      if (email != _sentinel)
+        _$StoreUserFieldMap['email']!:
+            _$StoreUserPerFieldToJson.email(email as String),
       if (emailFieldValue != null)
         _$StoreUserFieldMap['email']!: emailFieldValue,
     };
@@ -1720,12 +1821,18 @@ class _$StoreUserDocumentReference
       "Cannot specify both email and emailFieldValue",
     );
     final json = {
-      if (place != _sentinel) _$StoreUserFieldMap['place']!: place as String,
+      if (place != _sentinel)
+        _$StoreUserFieldMap['place']!:
+            _$StoreUserPerFieldToJson.place(place as String),
       if (placeFieldValue != null)
         _$StoreUserFieldMap['place']!: placeFieldValue,
-      if (uid != _sentinel) _$StoreUserFieldMap['uid']!: uid as String,
+      if (uid != _sentinel)
+        _$StoreUserFieldMap['uid']!:
+            _$StoreUserPerFieldToJson.uid(uid as String),
       if (uidFieldValue != null) _$StoreUserFieldMap['uid']!: uidFieldValue,
-      if (email != _sentinel) _$StoreUserFieldMap['email']!: email as String,
+      if (email != _sentinel)
+        _$StoreUserFieldMap['email']!:
+            _$StoreUserPerFieldToJson.email(email as String),
       if (emailFieldValue != null)
         _$StoreUserFieldMap['email']!: emailFieldValue,
     };
@@ -2029,13 +2136,13 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
 
   StoreUserQuery whereFieldPath(
     FieldPath fieldPath, {
-    Object? isEqualTo,
-    Object? isNotEqualTo,
-    Object? isLessThan,
-    Object? isLessThanOrEqualTo,
-    Object? isGreaterThan,
-    Object? isGreaterThanOrEqualTo,
-    Object? arrayContains,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
+    Object? arrayContains = notSetQueryParam,
     List<Object?>? arrayContainsAny,
     List<Object?>? whereIn,
     List<Object?>? whereNotIn,
@@ -2062,12 +2169,12 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
   }
 
   StoreUserQuery whereDocumentId({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -2091,12 +2198,12 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
   }
 
   StoreUserQuery wherePlace({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -2105,27 +2212,39 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$StoreUserFieldMap['place']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.place(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$StoreUserPerFieldToJson.place(e)),
+        whereNotIn: whereNotIn?.map((e) => _$StoreUserPerFieldToJson.place(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   StoreUserQuery whereUid({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -2134,27 +2253,39 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$StoreUserFieldMap['uid']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.uid(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$StoreUserPerFieldToJson.uid(e)),
+        whereNotIn: whereNotIn?.map((e) => _$StoreUserPerFieldToJson.uid(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   StoreUserQuery whereEmail({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -2163,15 +2294,27 @@ class _$StoreUserQuery extends QueryReference<StoreUser, StoreUserQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$StoreUserFieldMap['email']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$StoreUserPerFieldToJson.email(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$StoreUserPerFieldToJson.email(e)),
+        whereNotIn: whereNotIn?.map((e) => _$StoreUserPerFieldToJson.email(e)),
       ),
       $queryCursor: $queryCursor,
     );

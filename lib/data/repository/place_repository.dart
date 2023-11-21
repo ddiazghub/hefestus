@@ -10,4 +10,5 @@ class PlaceRepository {
   Future<List<Place>> search(Point center) => source.search(center);
   Future<List<PlaceCompletion>> complete(String text, Point center) => source.complete(text, center);
   Future<String> getPhoto(String id) => source.getPhoto(id);
+  Future<Place> getPlace(String id) => source.getPlace(id);
 }

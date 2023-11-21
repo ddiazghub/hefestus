@@ -1,8 +1,7 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hefestus/data/model/user.dart';
 import 'package:hefestus/ui/controllers/user_controller.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../controllers/auth_controller.dart';
@@ -15,15 +14,17 @@ class ChatPage extends GetView<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    AuthController authController = Get.find();
-    AppUser? user = controller.users[authController.uid];
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 25.0),
-      child: Column(
-        children: [
-          ExtendedImage.network(user!.image),
-          Text('Bienvenido ${controller.users[authController.uid]!.name}'),
-        ],
+    final isUser = Get.find<AuthController>().isUser;
+
+    return HefestusPage(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 25.0),
+        child: Column(
+          children: [
+          ChatList(receiver: receiver),
+          ChatInput(receiver: receiver),
+  ]
+        ),
       ),
     );
   }

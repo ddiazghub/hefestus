@@ -52,14 +52,15 @@ class UserController extends MultiStreamController<AppUserQuerySnapshot,
     subscription2 = StoreRef.snapshots().listen(onReceive(stores));
   }
 
-  Future<void> create(BaseUser user) async {
+  Future<void> create(BaseUser user, bool isUser) async {
+    try {
     logInfo('Creating user in realTime');
 
-    try {
-      user.type == UserType.user
+      isUser
           ? await UserRef.add(user as AppUser)
           : await StoreRef.add(user as StoreUser);
     } catch (error) {
+      logInfo('Creating sstore in realtime');
       logError(error);
 
       return Future.error(error);

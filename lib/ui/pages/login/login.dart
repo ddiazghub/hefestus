@@ -46,7 +46,7 @@ class LoginPage extends GetView<AuthController> {
           ? const SizedBox(height: 10)
           : const SizedBox(width: 40.0),
       TextButton.icon(
-        onPressed: () => Get.to(StoreSignUpPage()),
+        onPressed: () => Get.to(const StoreSignUpPage()),
         icon: const Icon(Icons.hardware),
         label: const Text('Create store account'),
       ),

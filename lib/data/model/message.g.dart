@@ -7,7 +7,9 @@ part of 'message.dart';
 // **************************************************************************
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, require_trailing_commas, prefer_single_quotes, prefer_double_quotes, use_super_parameters
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, require_trailing_commas, prefer_single_quotes, prefer_double_quotes, use_super_parameters, duplicate_ignore
+// ignore_for_file: type=lint
+// ignore_for_file: invalid_use_of_internal_member
 
 class _Sentinel {
   const _Sentinel();
@@ -209,16 +211,22 @@ class _$MessageDocumentReference
     );
     final json = {
       if (createdAt != _sentinel)
-        _$MessageFieldMap['createdAt']!: createdAt as DateTime,
+        _$MessageFieldMap['createdAt']!:
+            _$MessagePerFieldToJson.createdAt(createdAt as DateTime),
       if (createdAtFieldValue != null)
         _$MessageFieldMap['createdAt']!: createdAtFieldValue,
-      if (text != _sentinel) _$MessageFieldMap['text']!: text as String,
+      if (text != _sentinel)
+        _$MessageFieldMap['text']!:
+            _$MessagePerFieldToJson.text(text as String),
       if (textFieldValue != null) _$MessageFieldMap['text']!: textFieldValue,
-      if (sender != _sentinel) _$MessageFieldMap['sender']!: sender as String,
+      if (sender != _sentinel)
+        _$MessageFieldMap['sender']!:
+            _$MessagePerFieldToJson.sender(sender as String),
       if (senderFieldValue != null)
         _$MessageFieldMap['sender']!: senderFieldValue,
       if (receiver != _sentinel)
-        _$MessageFieldMap['receiver']!: receiver as String?,
+        _$MessageFieldMap['receiver']!:
+            _$MessagePerFieldToJson.receiver(receiver as String?),
       if (receiverFieldValue != null)
         _$MessageFieldMap['receiver']!: receiverFieldValue,
     };
@@ -255,16 +263,22 @@ class _$MessageDocumentReference
     );
     final json = {
       if (createdAt != _sentinel)
-        _$MessageFieldMap['createdAt']!: createdAt as DateTime,
+        _$MessageFieldMap['createdAt']!:
+            _$MessagePerFieldToJson.createdAt(createdAt as DateTime),
       if (createdAtFieldValue != null)
         _$MessageFieldMap['createdAt']!: createdAtFieldValue,
-      if (text != _sentinel) _$MessageFieldMap['text']!: text as String,
+      if (text != _sentinel)
+        _$MessageFieldMap['text']!:
+            _$MessagePerFieldToJson.text(text as String),
       if (textFieldValue != null) _$MessageFieldMap['text']!: textFieldValue,
-      if (sender != _sentinel) _$MessageFieldMap['sender']!: sender as String,
+      if (sender != _sentinel)
+        _$MessageFieldMap['sender']!:
+            _$MessagePerFieldToJson.sender(sender as String),
       if (senderFieldValue != null)
         _$MessageFieldMap['sender']!: senderFieldValue,
       if (receiver != _sentinel)
-        _$MessageFieldMap['receiver']!: receiver as String?,
+        _$MessageFieldMap['receiver']!:
+            _$MessagePerFieldToJson.receiver(receiver as String?),
       if (receiverFieldValue != null)
         _$MessageFieldMap['receiver']!: receiverFieldValue,
     };
@@ -589,13 +603,13 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
 
   MessageQuery whereFieldPath(
     FieldPath fieldPath, {
-    Object? isEqualTo,
-    Object? isNotEqualTo,
-    Object? isLessThan,
-    Object? isLessThanOrEqualTo,
-    Object? isGreaterThan,
-    Object? isGreaterThanOrEqualTo,
-    Object? arrayContains,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
+    Object? arrayContains = notSetQueryParam,
     List<Object?>? arrayContainsAny,
     List<Object?>? whereIn,
     List<Object?>? whereNotIn,
@@ -622,12 +636,12 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
   }
 
   MessageQuery whereDocumentId({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -651,12 +665,12 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
   }
 
   MessageQuery whereCreatedAt({
-    DateTime? isEqualTo,
-    DateTime? isNotEqualTo,
-    DateTime? isLessThan,
-    DateTime? isLessThanOrEqualTo,
-    DateTime? isGreaterThan,
-    DateTime? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<DateTime>? whereIn,
     List<DateTime>? whereNotIn,
@@ -665,27 +679,41 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$MessageFieldMap['createdAt']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.createdAt(isEqualTo as DateTime)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.createdAt(isNotEqualTo as DateTime)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.createdAt(isLessThan as DateTime)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.createdAt(isLessThanOrEqualTo as DateTime)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.createdAt(isGreaterThan as DateTime)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson
+                .createdAt(isGreaterThanOrEqualTo as DateTime)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$MessagePerFieldToJson.createdAt(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$MessagePerFieldToJson.createdAt(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   MessageQuery whereText({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -694,27 +722,39 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$MessageFieldMap['text']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.text(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$MessagePerFieldToJson.text(e)),
+        whereNotIn: whereNotIn?.map((e) => _$MessagePerFieldToJson.text(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   MessageQuery whereSender({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
@@ -723,27 +763,39 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$MessageFieldMap['sender']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.sender(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$MessagePerFieldToJson.sender(e)),
+        whereNotIn: whereNotIn?.map((e) => _$MessagePerFieldToJson.sender(e)),
       ),
       $queryCursor: $queryCursor,
     );
   }
 
   MessageQuery whereReceiver({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
     bool? isNull,
     List<String?>? whereIn,
     List<String?>? whereNotIn,
@@ -752,15 +804,28 @@ class _$MessageQuery extends QueryReference<Message, MessageQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$MessageFieldMap['receiver']!,
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.receiver(isEqualTo as String?)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.receiver(isNotEqualTo as String?)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.receiver(isLessThan as String?)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson.receiver(isLessThanOrEqualTo as String?)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$MessagePerFieldToJson.receiver(isGreaterThan as String?)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$MessagePerFieldToJson
+                .receiver(isGreaterThanOrEqualTo as String?)
+            : notSetQueryParam,
         isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
+        whereIn: whereIn?.map((e) => _$MessagePerFieldToJson.receiver(e)),
+        whereNotIn: whereNotIn?.map((e) => _$MessagePerFieldToJson.receiver(e)),
       ),
       $queryCursor: $queryCursor,
     );

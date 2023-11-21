@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hefestus/ui/widgets/spinner.dart';
 
 class CachedImage extends StatelessWidget {
-  const CachedImage({super.key, required this.url, required this.fit});
+  const CachedImage({super.key, required this.url, this.fit});
 
   final String url;
-  final BoxFit fit;
+  final BoxFit? fit;
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,8 @@ class CachedImage extends StatelessWidget {
       return Image.network(
         url,
         fit: fit,
-        // loadingBuilder: (context, child, progress) => const Spinner(),
       );
     } else {
-      print('What');
       return CachedNetworkImage(
         imageUrl: url,
         fit: fit,

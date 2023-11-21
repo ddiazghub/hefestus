@@ -36,9 +36,9 @@ Future<void> main() async {
   }
 
   Get.put(ChatController());
+  Get.put(PlaceRepository(PlaceDatasource(apiKey)));
   Get.put(AuthController());
   Get.put(UserController());
-  Get.put(PlaceRepository(PlaceDatasource(apiKey)));
   Get.put(MapController());
 
   runApp(const MyApp());

@@ -111,6 +111,7 @@ class PlaceSearchRequest {
     'websiteUri',
   ];
 
+  static final getFields = _fields.join(',');
   static String? _formattedFields;
 
   static String fields() {

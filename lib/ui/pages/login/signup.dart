@@ -76,7 +76,7 @@ class SignUpPage extends GetView<AuthController> {
                 password,
               );
 
-              await controller.signup(user);
+              await controller.signup(user, true);
               Get.back();
             } else {
               form.markAllAsTouched();

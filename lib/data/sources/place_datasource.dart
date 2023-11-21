@@ -4,15 +4,21 @@ import 'package:hefestus/data/model/point.dart';
 
 abstract class BasePlaceDatasource {
   Future<List<Place>> search(Point center);
+  Future<Place> getPlace(String id);
   Future<List<PlaceCompletion>> complete(String text, Point center);
   Future<String> getPhoto(String id);
 }
 
 class PlaceDatasource extends GetConnect implements BasePlaceDatasource {
   PlaceDatasource(this.apiKey) {
-    headers = {
+    searchHeaders = {
       'X-Goog-Api-Key': apiKey,
       'X-Goog-FieldMask': PlaceSearchRequest.fields(),
+    };
+
+    getHeaders = {
+      'X-Goog-Api-Key': apiKey,
+      'X-Goog-FieldMask': PlaceSearchRequest.getFields,
     };
   }
 
@@ -21,8 +27,10 @@ class PlaceDatasource extends GetConnect implements BasePlaceDatasource {
   static const String completeUrl = '$base/places:searchText';
 
   final String apiKey;
-  late final Map<String, String> headers;
+  late final Map<String, String> searchHeaders;
+  late final Map<String, String> getHeaders;
 
+  String detailsUrl(String id) => '$base/places/$id';
   String photosUrl(String id) => '$base/$id/media?key=$apiKey&maxHeightPx=4500&skipHttpRedirect=true';
 
   @override
@@ -35,18 +43,23 @@ class PlaceDatasource extends GetConnect implements BasePlaceDatasource {
   @override
   Future<List<PlaceCompletion>> complete(String text, Point center) async {
     final body = PlaceCompletionRequest(textQuery: text, center: center).toJson();
-    final response = await httpClient.post(completeUrl, body: body, headers: headers);
-    final places = PlaceCompletionResponse.fromJson(response.body).places;
-
-    return places;
+    final response = await httpClient.post(completeUrl, body: body, headers: searchHeaders);
+    
+    return PlaceCompletionResponse.fromJson(response.body).places;
   }
 
   @override
   Future<List<Place>> search(Point center) async {
     final body = PlaceSearchRequest(center: center).toJson();
-    final response = await httpClient.post(searchUrl, body: body, headers: headers);
-    final places = PlaceSearchResponse.fromJson(response.body).places;
+    final response = await httpClient.post(searchUrl, body: body, headers: searchHeaders);
+    
+    return PlaceSearchResponse.fromJson(response.body).places;
+  }
 
-    return places;
+  @override
+  Future<Place> getPlace(String id) async {
+    final response = await httpClient.get(detailsUrl(id), headers: getHeaders);
+    
+    return Place.fromJson(response.body);
   }
 }

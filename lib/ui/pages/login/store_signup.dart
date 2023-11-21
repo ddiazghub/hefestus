@@ -10,6 +10,7 @@ import 'package:hefestus/data/model/user.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
 import 'package:hefestus/ui/controllers/map_controller.dart';
 import 'package:hefestus/ui/controllers/place_picker_controller.dart';
+import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/snapshot_builder.dart';
 import 'package:hefestus/ui/widgets/spinner.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -53,206 +54,208 @@ class StoreSignUpPageState extends State<StoreSignUpPage> {
       const Duration(milliseconds: 500),
     );
 
-    return FutureBuilder(
-        future: Assets.getIcons(),
-        builder: (context, snapshot) {
-          return SnapshotBuilder(
-              snapshot: snapshot,
-              builder: (context, icons) {
-                return Scaffold(
-                  body: ReactiveFormBuilder(
-                    form: buildForm,
-                    builder: (context, form, child) {
-                      Future<void> signup() async {
-                        if (picker.selected.value == null) {
-                          Get.snackbar('Error', 'Please select a hardware store');
-                          return;
+    return HefestusPage(
+      body: FutureBuilder(
+          future: Assets.getIcons(),
+          builder: (context, snapshot) {
+            return SnapshotBuilder(
+                snapshot: snapshot,
+                builder: (context, icons) {
+                  return Scaffold(
+                    body: ReactiveFormBuilder(
+                      form: buildForm,
+                      builder: (context, form, child) {
+                        Future<void> signup() async {
+                          if (picker.selected.value == null) {
+                            Get.snackbar('Error', 'Please select a hardware store');
+                            return;
+                          }
+      
+                          if (form.valid) {
+                            final String email = form.control('email').value;
+                            final String password = form.control('password').value;
+      
+                            final store = StoreAuthUser(
+                              email,
+                              picker.selected.value!.id,
+                              password,
+                            );
+      
+                            await auth.signup(store, false);
+                            Get.back();
+                          } else {
+                            form.markAllAsTouched();
+                          }
                         }
-
-                        if (form.valid) {
-                          final String email = form.control('email').value;
-                          final String password = form.control('password').value;
-
-                          final user = StoreAuthUser(
-                            email,
-                            picker.selected.value!.id,
-                            password,
-                          );
-
-                          await auth.signup(user);
-                          Get.back();
-                        } else {
-                          form.markAllAsTouched();
-                        }
-                      }
-
-                      final theme = Theme.of(context);
-
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Autocomplete<PlaceCompletion>(
-                                    displayStringForOption: (place) => place.displayName,
-                                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                                      return TextField(
-                                        controller: textEditingController,
-                                        focusNode: focusNode,
-                                        onSubmitted: (text) => onFieldSubmitted(),
-                                        decoration: InputDecoration(
-                                          hintText: 'Select your store',
-                                          focusColor: theme.colorScheme.background,
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(color: theme.colorScheme.secondary),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    optionsBuilder: (value) async {
-                                      try {
-                                        final List<PlaceCompletion>? options = await completion(value.text);
-                                        if (options == null) {
-                                          return [];
-                                        }
-
-                                        return options;
-                                      } catch (err) {
-                                        return [];
-                                      }
-                                    },
-                                    optionsViewBuilder: (context, onSelected, options) {
-                                      return Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Material(
-                                          elevation: 4.0,
-                                          child: ConstrainedBox(
-                                            constraints: const BoxConstraints(maxHeight: 500),
-                                            child: ListView(
-                                              shrinkWrap: true,
-                                              children: [
-                                                for (final (index, place) in options.indexed)
-                                                  Builder(builder: (BuildContext context) {
-                                                    final bool highlight =
-                                                        AutocompleteHighlightedOption.of(context) == index;
-                                                    if (highlight) {
-                                                      SchedulerBinding.instance
-                                                          .addPostFrameCallback((Duration timeStamp) {
-                                                        Scrollable.ensureVisible(context, alignment: 0.5);
-                                                      });
-                                                    }
-                                                    return ListTile(
-                                                      tileColor: highlight ? Theme.of(context).focusColor : null,
-                                                      onTap: () {
-                                                        onSelected(place);
-                                                        picker.selected.value = place;
-                                                        googleMapController?.moveCamera(
-                                                          CameraUpdate.newLatLngZoom(
-                                                            place.location.toLatLng(),
-                                                            14.4746,
-                                                          ),
-                                                        );
-                                                      },
-                                                      leading: const Icon(Icons.location_pin),
-                                                      title: Text(place.displayName),
-                                                      subtitle: Text(place.formattedAddress),
-                                                    );
-                                                  }),
-                                              ],
+      
+                        final theme = Theme.of(context);
+      
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Autocomplete<PlaceCompletion>(
+                                      displayStringForOption: (place) => place.displayName,
+                                      fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                                        return TextField(
+                                          controller: textEditingController,
+                                          focusNode: focusNode,
+                                          onSubmitted: (text) => onFieldSubmitted(),
+                                          decoration: InputDecoration(
+                                            hintText: 'Select your store',
+                                            focusColor: theme.colorScheme.background,
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(color: theme.colorScheme.secondary),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(height: 10),
-                                  SizedBox(
-                                    height: 500,
-                                    child: Obx(() {
-                                      return map.location == null
-                                          ? const Spinner()
-                                          : PointerInterceptor(
-                                              child: GoogleMap(
-                                                zoomControlsEnabled: false,
-                                                zoomGesturesEnabled: false,
-                                                tiltGesturesEnabled: false,
-                                                rotateGesturesEnabled: false,
-                                                scrollGesturesEnabled: false,
-                                                mapType: MapType.normal,
-                                                onMapCreated: (controller) => googleMapController = controller,
-                                                initialCameraPosition: CameraPosition(
-                                                  target: LatLng(
-                                                    map.latitude!,
-                                                    map.longitude!,
-                                                  ),
-                                                  zoom: 14.4746,
-                                                ),
-                                                myLocationEnabled: true,
-                                                markers: {
-                                                  if (picker.selected.value != null)
-                                                    Marker(
-                                                      markerId: const MarkerId('My Position'),
-                                                      icon: icons.hardware,
-                                                      position: picker.selected.value!.location.toLatLng(),
-                                                      infoWindow: InfoWindow(
-                                                        title: picker.selected.value!.displayName,
-                                                        snippet: picker.selected.value!.formattedAddress,
-                                                      ),
-                                                    ),
-                                                },
+                                        );
+                                      },
+                                      optionsBuilder: (value) async {
+                                        try {
+                                          final List<PlaceCompletion>? options = await completion(value.text);
+                                          if (options == null) {
+                                            return [];
+                                          }
+      
+                                          return options;
+                                        } catch (err) {
+                                          return [];
+                                        }
+                                      },
+                                      optionsViewBuilder: (context, onSelected, options) {
+                                        return Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Material(
+                                            elevation: 4.0,
+                                            child: ConstrainedBox(
+                                              constraints: const BoxConstraints(maxHeight: 500),
+                                              child: ListView(
+                                                shrinkWrap: true,
+                                                children: [
+                                                  for (final (index, place) in options.indexed)
+                                                    Builder(builder: (BuildContext context) {
+                                                      final bool highlight =
+                                                          AutocompleteHighlightedOption.of(context) == index;
+                                                      if (highlight) {
+                                                        SchedulerBinding.instance
+                                                            .addPostFrameCallback((Duration timeStamp) {
+                                                          Scrollable.ensureVisible(context, alignment: 0.5);
+                                                        });
+                                                      }
+                                                      return ListTile(
+                                                        tileColor: highlight ? Theme.of(context).focusColor : null,
+                                                        onTap: () {
+                                                          onSelected(place);
+                                                          picker.selected.value = place;
+                                                          googleMapController?.moveCamera(
+                                                            CameraUpdate.newLatLngZoom(
+                                                              place.location.toLatLng(),
+                                                              14.4746,
+                                                            ),
+                                                          );
+                                                        },
+                                                        leading: const Icon(Icons.location_pin),
+                                                        title: Text(place.displayName),
+                                                        subtitle: Text(place.formattedAddress),
+                                                      );
+                                                    }),
+                                                ],
                                               ),
-                                            );
-                                    }),
-                                  ),
-                                ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      height: 500,
+                                      child: Obx(() {
+                                        return map.location == null
+                                            ? const Spinner()
+                                            : PointerInterceptor(
+                                                child: GoogleMap(
+                                                  zoomControlsEnabled: false,
+                                                  zoomGesturesEnabled: false,
+                                                  tiltGesturesEnabled: false,
+                                                  rotateGesturesEnabled: false,
+                                                  scrollGesturesEnabled: false,
+                                                  mapType: MapType.normal,
+                                                  onMapCreated: (controller) => googleMapController = controller,
+                                                  initialCameraPosition: CameraPosition(
+                                                    target: LatLng(
+                                                      map.latitude!,
+                                                      map.longitude!,
+                                                    ),
+                                                    zoom: 14.4746,
+                                                  ),
+                                                  myLocationEnabled: true,
+                                                  markers: {
+                                                    if (picker.selected.value != null)
+                                                      Marker(
+                                                        markerId: const MarkerId('My Position'),
+                                                        icon: icons.hardware,
+                                                        position: picker.selected.value!.location.toLatLng(),
+                                                        infoWindow: InfoWindow(
+                                                          title: picker.selected.value!.displayName,
+                                                          snippet: picker.selected.value!.formattedAddress,
+                                                        ),
+                                                      ),
+                                                  },
+                                                ),
+                                              );
+                                      }),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Center(
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(maxWidth: 500),
-                                child: Container(
-                                  padding: const EdgeInsets.all(20),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ReactiveTextField<String>(
-                                          formControlName: 'email',
-                                          textInputAction: TextInputAction.next,
-                                          decoration: decoration('email'),
-                                        ),
-                                        separator,
-                                        ReactiveTextField<String>(
-                                          formControlName: 'password',
-                                          obscureText: true,
-                                          textInputAction: TextInputAction.next,
-                                          decoration: decoration('Password'),
-                                        ),
-                                        separator,
-                                        ElevatedButton(
-                                          onPressed: signup,
-                                          child: const Text('Submit'),
-                                        ),
-                                      ],
+                            Expanded(
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(maxWidth: 500),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          ReactiveTextField<String>(
+                                            formControlName: 'email',
+                                            textInputAction: TextInputAction.next,
+                                            decoration: decoration('email'),
+                                          ),
+                                          separator,
+                                          ReactiveTextField<String>(
+                                            formControlName: 'password',
+                                            obscureText: true,
+                                            textInputAction: TextInputAction.next,
+                                            decoration: decoration('Password'),
+                                          ),
+                                          separator,
+                                          ElevatedButton(
+                                            onPressed: signup,
+                                            child: const Text('Submit'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                );
-              });
-        });
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                });
+          }),
+    );
   }
 }
 
