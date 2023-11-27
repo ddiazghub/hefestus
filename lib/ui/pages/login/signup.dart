@@ -53,6 +53,7 @@ class SignUpPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     const separator = SizedBox(height: 8);
+    final row = MediaQuery.of(context).size.width > 800;
 
     return HefestusPage(
       body: ReactiveFormBuilder(
@@ -85,69 +86,72 @@ class SignUpPage extends GetView<AuthController> {
             }
           }
 
-          return Row(
-            children: [
-              Expanded(child: AppImagePicker(picker: picker)),
-              Expanded(
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(Assets.logo),
-                            ReactiveTextField<String>(
-                              key: keys.name,
-                              formControlName: 'name',
-                              textInputAction: TextInputAction.next,
-                              decoration: decoration('name'),
-                            ),
-                            separator,
-                            ReactiveTextField<String>(
-                              key: keys.email,
-                              formControlName: 'email',
-                              textInputAction: TextInputAction.next,
-                              decoration: decoration('email'),
-                            ),
-                            separator,
-                            ReactiveTextField<String>(
-                              key: keys.password,
-                              formControlName: 'password',
-                              obscureText: true,
-                              textInputAction: TextInputAction.next,
-                              decoration: decoration('Password'),
-                            ),
-                            separator,
-                            ReactiveDateTimePicker(
-                              key: keys.birthday,
-                              formControlName: 'birthday',
-                              decoration: decoration(
-                                'birthday',
-                                icon: const Icon(Icons.calendar_today),
-                              ),
-                            ),
-                            separator,
-                            ReactiveTextField<String>(
-                              key: keys.phone,
-                              formControlName: 'phone',
-                              textInputAction: TextInputAction.next,
-                              decoration: decoration('phone'),
-                            ),
-                            separator,
-                            SubmitButton(onPressed: signup),
-                          ],
-                        ),
-                      ),
+          final signupForm = ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Image.asset(Assets.logo),
+                  if (!row) ...[
+                    Expanded(child: AppImagePicker(picker: picker)),
+                    separator,
+                  ],
+                  ReactiveTextField<String>(
+                    key: keys.name,
+                    formControlName: 'name',
+                    textInputAction: TextInputAction.next,
+                    decoration: decoration('name'),
+                  ),
+                  separator,
+                  ReactiveTextField<String>(
+                    key: keys.email,
+                    formControlName: 'email',
+                    textInputAction: TextInputAction.next,
+                    decoration: decoration('email'),
+                  ),
+                  separator,
+                  ReactiveTextField<String>(
+                    key: keys.password,
+                    formControlName: 'password',
+                    obscureText: true,
+                    textInputAction: TextInputAction.next,
+                    decoration: decoration('Password'),
+                  ),
+                  separator,
+                  ReactiveDateTimePicker(
+                    key: keys.birthday,
+                    formControlName: 'birthday',
+                    decoration: decoration(
+                      'birthday',
+                      icon: const Icon(Icons.calendar_today),
                     ),
                   ),
-                ),
+                  separator,
+                  ReactiveTextField<String>(
+                    key: keys.phone,
+                    formControlName: 'phone',
+                    textInputAction: TextInputAction.next,
+                    decoration: decoration('phone'),
+                  ),
+                  separator,
+                  SubmitButton(onPressed: signup),
+                ],
               ),
-            ],
+            ),
           );
+
+          if (row) {
+            return Row(
+              children: [
+                Expanded(child: AppImagePicker(picker: picker)),
+                Expanded(child: Center(child: signupForm)),
+              ],
+            );
+          } else {
+            return Center(child: signupForm);
+          }
         },
       ),
     );

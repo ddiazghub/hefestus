@@ -12,12 +12,6 @@ import '../../controllers/auth_controller.dart';
 class LoginPage extends GetView<AuthController> {
   const LoginPage({super.key});
 
-  static final defaultUsers = [
-    ('a@a.com', '123456'),
-    ('b@b.com', '123456'),
-    ('c@c.com', '123456'),
-  ];
-
   static InputDecoration decoration(String label) {
     return InputDecoration(
       labelText: label,
@@ -48,7 +42,7 @@ class LoginPage extends GetView<AuthController> {
           ? const SizedBox(height: 10)
           : const SizedBox(width: 40.0),
       TextButton.icon(
-        onPressed: () => Get.to(const StoreSignUpPage()),
+        onPressed: () => Get.to(StoreSignUpPage()),
         icon: const Icon(Icons.hardware),
         label: const Text('Create store account'),
       ),

@@ -47,17 +47,17 @@ AppBar hefestusAppbar(BuildContext context) {
           onPressed: profileHandler(auth),
         ),
         const SizedBox(width: 10),
-      ],
-      IconButton(
-        icon: const Icon(
-          Icons.exit_to_app,
-          size: 30,
+        IconButton(
+          icon: const Icon(
+            Icons.exit_to_app,
+            size: 30,
+          ),
+          onPressed: () {
+            auth.logout();
+            Get.offAll(const Central());
+          },
         ),
-        onPressed: () {
-          auth.logout();
-          Get.offAll(const Central());
-        },
-      ),
+      ],
     ],
     backgroundColor: theme.colorScheme.primary,
     foregroundColor: theme.colorScheme.onPrimary,

@@ -30,28 +30,31 @@ class AppImagePicker extends StatelessWidget {
             return SnapshotBuilder(
               snapshot: snapshot,
               builder: (context, bytes) {
-                return Container(
-                  padding: const EdgeInsets.all(30),
-                  height: double.infinity,
-                  child: InkWell(
-                    onTap: pickAvatar,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(2)),
-                        image: bytes.isEmpty
-                            ? null
-                            : DecorationImage(image: MemoryImage(bytes)),
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxHeight: 50,
-                          minHeight: 30,
+                return ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 600),
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    height: double.infinity,
+                    child: InkWell(
+                      onTap: pickAvatar,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(2)),
+                          image: bytes.isEmpty
+                              ? null
+                              : DecorationImage(image: MemoryImage(bytes)),
+                          border: Border.all(color: Colors.grey),
                         ),
-                        child: Center(
-                          child: ElevatedButton(
-                            onPressed: pickAvatar,
-                            child: const Text('Pick Avatar'),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxHeight: 50,
+                            minHeight: 30,
+                          ),
+                          child: Center(
+                            child: ElevatedButton(
+                              onPressed: pickAvatar,
+                              child: const Text('Pick Avatar'),
+                            ),
                           ),
                         ),
                       ),
