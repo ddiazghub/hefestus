@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/place.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/controllers/user_controller.dart';
 import 'package:hefestus/ui/pages/chat_page.dart';
 import 'package:hefestus/ui/widgets/hefestus_page.dart';
 import 'package:hefestus/ui/widgets/image_viewer.dart';
@@ -16,9 +17,10 @@ class PlacePage extends GetView<AuthController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
+    final UserController userController = Get.find();
 
     return HefestusPage(
-      floatingActionButton: controller.isUser
+      floatingActionButton: controller.isUser && userController.stores[place.id] != null
           ? ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,

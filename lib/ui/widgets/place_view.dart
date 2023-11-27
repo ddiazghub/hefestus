@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hefestus/data/model/place.dart';
 import 'package:hefestus/ui/controllers/auth_controller.dart';
+import 'package:hefestus/ui/controllers/user_controller.dart';
 import 'package:hefestus/ui/widgets/place_hours.dart';
 import 'package:hefestus/ui/widgets/rating.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,6 +16,8 @@ class PlaceView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final UserController userController = Get.find();
+    
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 20),
@@ -66,6 +69,13 @@ class PlaceView extends GetView<AuthController> {
             ],
           ),
           const SizedBox(height: 18),
+          if (userController.stores[place.id] == null) ...[
+            const Text(
+              'This store is not registered in our application. It won\'t receive any messages.',
+              style: TextStyle(color: Colors.red),
+            ),
+            const SizedBox(height: 8),
+          ],
           PlaceHours(place: place),
           const SizedBox(height: 8),
           Row(
